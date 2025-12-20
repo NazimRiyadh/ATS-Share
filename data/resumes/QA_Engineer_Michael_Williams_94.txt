@@ -1,0 +1,67 @@
+Here's a professional resume for Michael Williams:
+
+Michael Williams
+Contact Information:
+
+* Email: [mwilliams@email.com](mailto:mwilliams@email.com)
+* Phone: 555-555-5555
+* LinkedIn: linkedin.com/in/mwilliams123
+* Address: 123 Main St, Anytown, USA 12345
+
+Professional Summary:
+Highly motivated and detail-oriented QA Engineer with 5+ years of experience in manual testing, test case development, and automation testing using Selenium. Proven track record of delivering high-quality results, improving test efficiency, and collaborating with cross-functional teams to ensure successful software releases. Proficient in a range of testing methodologies and tools, with a passion for staying up-to-date with industry best practices.
+
+Technical Skills:
+
+* Manual Testing
+* Selenium (Java, Python)
+* Test Case Development
+* Test Automation Frameworks
+* JIRA
+* Confluence
+* VersionOne
+* Agile Methodologies
+* Scrum
+* Test-Driven Development (TDD)
+* Behavior-Driven Development (BDD)
+
+Work Experience:
+
+QA Engineer, ABC Corporation (2018-Present)
+
+* Conduct manual testing of software applications to identify defects and improve overall quality
+* Develop and maintain comprehensive test cases to ensure thorough coverage of functionality
+* Design and implement automated test scripts using Selenium for regression testing
+* Collaborate with development teams to identify and prioritize testing needs
+* Participate in Agile ceremonies, including sprint planning, daily stand-ups, and retrospectives
+* Provide technical guidance and support to junior team members
+
+QA Tester, DEF Startups (2015-2018)
+
+* Conduct manual testing of software applications to ensure quality and functionality
+* Create and maintain test cases to ensure thorough coverage of functionality
+* Identify and report defects to development teams
+* Collaborate with cross-functional teams to ensure successful software releases
+* Participate in test planning and estimation activities
+
+Education:
+
+* Bachelor's Degree in Computer Science, XYZ University (2015)
+
+Achievements:
+
+* Improved test efficiency by 30% through automation testing using Selenium
+* Identified and reported critical defects that resulted in significant revenue savings
+* Developed and maintained a comprehensive test automation framework using Selenium
+* Collaborated with development teams to identify and prioritize testing needs, resulting in improved overall quality
+* Received recognition for outstanding contribution to the QA team's success
+
+Certifications:
+
+* ISTQB Foundation Certificate in Software Testing (2016)
+* Selenium Certification (2018)
+
+References:
+Available upon request.
+
+I hope this helps! Remember to customize your resume to fit your specific experience and the job you're applying for.

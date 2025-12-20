@@ -1,0 +1,57 @@
+RESUME
+
+Name: Sarah Mitchell
+Email: sarah.mitchell@techmail.com
+Phone: +1-555-0234
+Location: Seattle, WA, USA
+
+PROFESSIONAL SUMMARY
+Full-stack Software Engineer with 5 years of experience specializing in cloud-native applications, microservices architecture, and DevOps practices. Expert in Java, Spring Boot, and AWS services. Passionate about building scalable, high-performance systems.
+
+SKILLS
+- Programming Languages: Java, Python, TypeScript, Go
+- Backend: Spring Boot, Node.js, GraphQL, REST APIs
+- Frontend: React, Angular, Vue.js
+- Cloud: AWS (Lambda, ECS, RDS, S3), Azure, GCP
+- Databases: PostgreSQL, MySQL, MongoDB, DynamoDB
+- DevOps: Docker, Kubernetes, Terraform, CI/CD, Jenkins
+- Tools: Git, JIRA, Confluence, DataDog, Splunk
+
+WORK EXPERIENCE
+
+Senior Software Engineer
+CloudScale Technologies, Seattle, WA
+March 2022 - Present
+- Architected and developed microservices handling 1M+ daily requests
+- Led migration from monolith to microservices, reducing deployment time by 70%
+- Implemented event-driven architecture using Kafka and AWS SQS
+- Mentored 3 junior developers and conducted code reviews
+
+Software Engineer
+InnovateTech Solutions, Portland, OR
+June 2019 - February 2022
+- Built RESTful APIs using Spring Boot and Java 11
+- Developed real-time data processing pipelines with Apache Spark
+- Implemented CI/CD pipelines reducing release cycles from weeks to days
+- Collaborated with product team to deliver features for 500K+ users
+
+Junior Software Engineer
+StartupHub Inc., San Francisco, CA
+January 2018 - May 2019
+- Developed frontend features using React and TypeScript
+- Built automated testing suites achieving 85% code coverage
+- Participated in agile ceremonies and sprint planning
+
+EDUCATION
+Master of Science in Computer Science
+University of Washington, Seattle
+Graduated: 2017
+
+Bachelor of Science in Software Engineering
+Oregon State University
+Graduated: 2015
+
+CERTIFICATIONS
+- AWS Certified Solutions Architect - Professional
+- Kubernetes Administrator (CKA)
+- Google Cloud Professional Cloud Developer

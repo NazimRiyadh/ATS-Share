@@ -1,0 +1,56 @@
+Here is a professional resume for Anthony Harris:
+
+Anthony Harris
+Contact Information:
+
+* Email: [anthony.harris@email.com](mailto:anthony.harris@email.com)
+* Phone: (555) 123-4567
+* LinkedIn: linkedin.com/in/anthonyharris
+* GitHub: github.com/anthonyharris
+
+Summary:
+Highly motivated and detail-driven Data Scientist with expertise in Python, Statistics, Deep Learning, SQL, and Data Visualization. Proven track record of developing and deploying machine learning models to drive business growth and inform strategic decision-making. Skilled in using TensorFlow and other popular libraries to design, train, and evaluate complex models.
+
+Professional Experience:
+
+Data Scientist, XYZ Corporation (2018-Present)
+
+* Developed and deployed multiple machine learning models using Python, TensorFlow, and scikit-learn to predict customer churn, sales, and market trends
+* Collaborated with cross-functional teams to design and implement data-driven solutions, resulting in a 25% increase in sales revenue and a 30% reduction in customer churn
+* Designed and implemented a data warehousing and ETL process using SQL and Python to integrate and analyze vast amounts of customer data
+* Created interactive dashboards using Tableau and Power BI to communicate insights and recommendations to stakeholders
+
+Senior Data Analyst, ABC Startups (2015-2018)
+
+* Analyzed and interpreted large datasets to identify trends and insights, informing business decisions and informing product development
+* Developed and maintained complex statistical models using R and Python to predict customer behavior and optimize marketing campaigns
+* Collaborated with marketing and product teams to design and implement A/B testing and experimentation to inform product development and improve customer engagement
+* Created data visualizations and reports using Tableau and Power BI to communicate insights and recommendations to stakeholders
+
+Education:
+
+* Master of Science in Data Science, University of California, Berkeley (2015)
+* Bachelor of Science in Statistics, University of Michigan (2013)
+
+Skills:
+
+* Programming languages: Python, R, SQL
+* Machine learning libraries: TensorFlow, scikit-learn, PyTorch
+* Data visualization tools: Tableau, Power BI, Matplotlib, Seaborn
+* Database management: MySQL, PostgreSQL, MongoDB
+* Operating Systems: Windows, Linux, macOS
+
+Achievements:
+
+* Winner, Kaggle Competition: Predicting Customer Churn (2019)
+	+ Developed and deployed a deep learning model using TensorFlow and Python to predict customer churn, resulting in a 95% accuracy rate and a top-5 finish in the competition
+* Featured Speaker, Data Science Conference (2020)
+	+ Presented a talk on "Applying Deep Learning to Real-World Problems" to an audience of data scientists and industry professionals
+
+Certifications:
+
+* Certified Data Scientist, Data Science Council of America (2019)
+* Certified Analytics Professional, Institute for Operations Research and the Management Sciences (2018)
+
+References:
+Available upon request.

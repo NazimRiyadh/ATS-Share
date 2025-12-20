@@ -1,0 +1,34 @@
+**candidate profile: daiwik jain**
+
+**interviewed for:** ui designer
+
+**key takeaways:**
+
+daiwik jain demonstrated enthusiasm and a willingness to learn, but unfortunately, his skills and experience did not fully align with the requirements of the ui designer role. while he has a background in design, his strengths lie more in traditional graphic design rather than user-centered design, interaction design, or front-end development.
+
+**areas for improvement:**
+
+1. **user experience (ux) design:** daiwik's understanding of ux design principles and human-centered design processes was limited. he struggled to articulate his approach to empathy mapping, user journey mapping, and wireframing. it became clear that he had not worked extensively in ux design and would require significant training to develop these skills.
+2. **prototyping:** daiwik had no experience in creating interactive prototypes using tools like invision, figma, or sketch. he was unfamiliar with the concept of prototyping and its importance in the ui design process.
+3. **graphic design:** while daiwik has a strong foundation in graphic design, his skills are more focused on traditional print design rather than digital design. he lacked experience in designing for various screen sizes, resolutions, and devices.
+4. **interaction design:** daiwik's understanding of interaction design principles, such as animation, transitions, and micro-interactions, was limited. he was unfamiliar with the concept of designing for micro-interactions and how they enhance the user experience.
+5. **front-end development (html, css, javascript):** daiwik had no experience in writing front-end code or working with html, css, and javascript. this limitation made it challenging for him to understand the technical aspects of ui design and how to implement designs in a functional way.
+6. **g, a, m, i, n, g, ,,  , r, e, t, a, i, l, ,,  , m, e, d, i, a:** daiwik was unfamiliar with the tools and technologies required for this role, including sketch, figma, invision, adobe xd, and wireframing plugins.
+
+**concerns raised during the interview:**
+
+1. **difficulty with certain tasks:** daiwik struggled with tasks that required him to think critically about user needs and design solutions that were both aesthetically pleasing and functional.
+2. **lack of familiarity with specific tools:** daiwik was unfamiliar with many of the tools and technologies required for the ui designer role, which would require significant time and training to master.
+3. **limited experience in real-world projects:** daiwik's portfolio consisted mainly of academic and personal projects, which did not demonstrate the depth of experience required for this role.
+
+**potential for growth:**
+
+despite the gaps in daiwik's skills and experience, he demonstrated a strong desire to learn and grow. with further training, exposure, and mentorship, he could develop the necessary skills to become a successful ui designer. it would be beneficial to provide daiwik with targeted training in ux design, prototyping, interaction design, and front-end development, as well as hands-on experience working on real-world projects.
+
+**recommendations:**
+
+1. provide daiwik with a comprehensive training program that covers ux design, prototyping, interaction design, and front-end development.
+2. assign him to work on real-world projects that allow him to apply his skills and learn from feedback.
+3. consider providing daiwik with a mentor who can guide him in his development and provide support as he grows in his role.
+
+by providing daiwik with the right training and support, he has the potential to develop the necessary skills to become a successful ui designer.

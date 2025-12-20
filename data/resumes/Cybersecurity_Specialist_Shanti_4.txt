@@ -1,0 +1,52 @@
+Here is a professional resume for Shanti:
+
+**Shanti**
+**Cybersecurity Specialist**
+
+**Contact Information:**
+
+* Phone: (123) 456-7890
+* Email: [shanti@email.com](mailto:shanti@email.com)
+* LinkedIn: linkedin.com/in/shanti-cybersecurity
+
+**Objective:**
+To leverage my 10 years of experience as a Cybersecurity Specialist to secure critical infrastructure and protect against emerging threats in a dynamic and challenging environment.
+
+**Experience Summary:**
+Highly skilled and experienced Cybersecurity Specialist with 10 years of experience in designing and implementing comprehensive security strategies to protect against cyber threats. Proven expertise in penetration testing, encryption techniques, and firewall management. Skilled in assessing and mitigating risks, ensuring compliance with industry regulations, and providing expert guidance to stakeholders.
+
+**Professional Experience:**
+
+**Senior Cybersecurity Specialist**, XYZ Corporation (2018-Present)
+
+* Conduct penetration testing and vulnerability assessments to identify and remediate security weaknesses
+* Design and implement encryption techniques to protect sensitive data
+* Manage and configure firewalls to ensure secure data transmission
+* Collaborate with IT teams to develop and implement comprehensive security strategies
+* Provide expert guidance to stakeholders on cybersecurity best practices and incident response
+
+**Cybersecurity Specialist**, ABC Company (2015-2018)
+
+* Conducted security audits and assessments to identify vulnerabilities and risks
+* Developed and implemented security protocols to protect against cyber threats
+* Collaborated with IT teams to implement encryption techniques and firewall management
+* Provided training and awareness programs to employees on cybersecurity best practices
+
+**Education:**
+
+* Bachelor's Degree in Computer Science, [University Name] (2010-2014)
+
+**Core Skills:**
+
+* **Penetration Testing:** Conducted comprehensive penetration testing and vulnerability assessments using industry-standard tools and techniques
+* **Encryption Techniques:** Expertise in designing and implementing encryption techniques to protect sensitive data, including SSL/TLS, AES, and PGP
+* **Firewall Management:** Skilled in configuring and managing firewalls to ensure secure data transmission, including Cisco ASA and Palo Alto Networks
+* **Risk Assessment and Mitigation:** Proven expertise in assessing and mitigating risks, ensuring compliance with industry regulations
+* **Compliance:** Strong understanding of industry regulations, including HIPAA, PCI-DSS, and GDPR
+
+**Certifications:**
+
+* CompTIA Security+
+* Certified Information Systems Security Professional (CISSP)
+
+I hope this helps! Let me know if you need any adjustments.

@@ -1,0 +1,69 @@
+Here's a professional resume for Jamie Evans:
+
+Jamie Evans
+Database Administrator
+
+Contact Information:
+
+* Phone: (123) 456-7890
+* Email: [james.evens@email.com](mailto:james.evens@email.com)
+* LinkedIn: linkedin.com/in/jamieevansdba
+* GitHub: github.com/jamieevans
+
+Summary:
+Highly skilled and experienced Database Administrator with expertise in designing, implementing, and managing databases across various platforms. Proficient in SQL, NoSQL, Backup and Recovery, and Database Security. Proven track record of improving database performance, ensuring data integrity, and ensuring compliance with regulatory requirements.
+
+Professional Experience:
+
+Senior Database Administrator
+ABC Corporation (2018-Present)
+
+* Designed and implemented a database management system for a high-traffic e-commerce website, resulting in a 30% increase in sales
+* Developed and maintained complex SQL queries to ensure data accuracy and integrity
+* Implemented a NoSQL database to improve data scalability and performance
+* Conducted regular backups and restores to ensure business continuity
+* Ensured database security by implementing encryption, access controls, and monitoring systems
+
+Database Administrator
+XYZ Inc. (2015-2018)
+
+* Managed a team of junior database administrators to ensure database operations ran smoothly
+* Implemented a database backup and recovery system, reducing downtime by 50%
+* Developed and maintained database security policies and procedures
+* Assisted in the implementation of a NoSQL database to improve data scalability and performance
+* Collaborated with development teams to ensure database compatibility with new applications
+
+Education:
+
+* Bachelor of Science in Computer Science, [University Name] (2010-2014)
+
+Certifications:
+
+* Certified Database Administrator (CDA), [Certification Name] (2015)
+* Certified Information Systems Security Professional (CISSP), [Certification Name] (2017)
+
+Skills:
+
+* SQL (Microsoft SQL Server, Oracle)
+* NoSQL (MongoDB, Cassandra)
+* Backup and Recovery (SQL Server, MySQL)
+* Database Security (Encryption, Access controls, Monitoring)
+* Database Design and Implementation
+* Data Modeling and Architecture
+* Data Migration and Integration
+* Scripting languages (PowerShell, Python)
+
+Achievements:
+
+* Improved database performance by 25% through indexing and tuning
+* Reduced database downtime by 50% through regular backups and restores
+* Implemented a database security system, reducing security incidents by 30%
+* Developed a database migration plan, resulting in a 20% increase in data scalability
+
+Professional Memberships:
+
+* Member, [Professional Association Name]
+* Member, [Online Community Name]
+
+References:
+Available upon request.

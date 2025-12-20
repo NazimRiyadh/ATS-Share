@@ -1,0 +1,56 @@
+RESUME
+
+Name: Michael Chen
+Email: michael.chen@devmail.com
+Phone: +1-555-0456
+Location: Austin, TX, USA
+
+PROFESSIONAL SUMMARY
+Data Engineer with 4 years of experience in building robust data pipelines, ETL processes, and analytics platforms. Skilled in Python, Apache Spark, and cloud data services. Proven track record of transforming raw data into actionable business insights.
+
+SKILLS
+- Programming Languages: Python, SQL, Scala, Bash
+- Big Data: Apache Spark, Hadoop, Kafka, Airflow
+- Databases: PostgreSQL, Snowflake, BigQuery, Redshift
+- Cloud: AWS (EMR, Glue, S3, Lambda), GCP (Dataflow, Pub/Sub)
+- Tools: dbt, Great Expectations, Apache Beam, Prefect
+- Visualization: Tableau, Looker, Power BI
+
+WORK EXPERIENCE
+
+Senior Data Engineer
+DataDriven Analytics, Austin, TX
+August 2021 - Present
+- Built and maintained data pipelines processing 50TB+ daily using Apache Spark
+- Designed real-time streaming architecture with Kafka and Spark Streaming
+- Implemented data quality framework reducing data issues by 80%
+- Led migration from on-premise Hadoop to AWS EMR, cutting costs by 40%
+
+Data Engineer
+InsightFlow Inc., Denver, CO
+March 2019 - July 2021
+- Developed ETL pipelines using Python and Apache Airflow
+- Created dimensional data models for analytics using dbt
+- Built automated reporting dashboards in Tableau
+- Collaborated with data science team on feature engineering
+
+Junior Data Analyst
+TechMetrics Corp., Seattle, WA
+June 2018 - February 2019
+- Wrote complex SQL queries for business reporting
+- Created data visualizations and executive dashboards
+- Performed ad-hoc analysis for marketing campaigns
+
+EDUCATION
+Master of Science in Data Science
+University of Texas at Austin
+Graduated: 2018
+
+Bachelor of Science in Statistics
+University of Colorado, Boulder
+Graduated: 2016
+
+CERTIFICATIONS
+- AWS Certified Data Analytics - Specialty
+- Databricks Certified Data Engineer Professional
+- Google Cloud Professional Data Engineer

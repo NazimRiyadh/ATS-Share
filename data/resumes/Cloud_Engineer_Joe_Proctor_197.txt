@@ -1,0 +1,60 @@
+Here's a sample resume for Joe Proctor, a Cloud Engineer candidate with expertise in Serverless Architecture, Cloud Networking, and Scripting:
+
+Joe Proctor
+Cloud Engineer
+
+Contact Information:
+
+* Email: [joe.proctor@email.com](mailto:joe.proctor@email.com)
+* Phone: (555) 123-4567
+* LinkedIn: linkedin.com/in/joeproctor
+
+Professional Summary:
+Highly skilled Cloud Engineer with 5+ years of experience in designing and deploying scalable, secure, and efficient cloud-based solutions. Proven expertise in Serverless Architecture, Cloud Networking, and Scripting languages. Passionate about staying up-to-date with the latest cloud technologies and best practices.
+
+Technical Skills:
+
+* Cloud Platforms: AWS, Azure, Google Cloud
+* Serverless Architecture: AWS Lambda, Azure Functions, Google Cloud Functions
+* Cloud Networking: VPCs, subnets, security groups, load balancers
+* Scripting Languages: Python, JavaScript, PowerShell
+* Operating Systems: Windows, Linux
+* Familiarity with: Docker, Kubernetes, Terraform, Ansible
+
+Professional Experience:
+
+Cloud Engineer, ABC Corporation (2018-Present)
+
+* Design and deploy scalable, secure, and efficient cloud-based solutions for clients
+* Develop and maintain serverless architectures using AWS Lambda, Azure Functions, and Google Cloud Functions
+* Implement cloud networking solutions using VPCs, subnets, security groups, and load balancers
+* Write and maintain scripts using Python, JavaScript, and PowerShell to automate tasks and workflows
+* Collaborate with cross-functional teams to ensure successful project delivery
+
+Senior Systems Administrator, DEF Startups (2015-2018)
+
+* Managed and maintained on-premises and cloud-based infrastructure for multiple clients
+* Implemented and optimized cloud networking solutions using AWS and Azure
+* Developed and deployed scripts using Python and PowerShell to automate tasks and workflows
+* Provided technical support and training to clients and internal teams
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2015)
+
+Certifications:
+
+* AWS Certified Developer - Associate (2019)
+* Microsoft Certified: Azure Developer Associate (2018)
+* CompTIA Cloud+ (2017)
+
+Achievements:
+
+* Designed and deployed a serverless architecture for a Fortune 500 client, resulting in a 30% reduction in costs and a 25% increase in efficiency
+* Implemented a cloud networking solution using AWS and Azure for a startup client, resulting in a 99.99% uptime and a 20% increase in traffic
+* Developed and deployed a script using Python and PowerShell to automate a workflow for a client, resulting in a 50% reduction in manual effort and a 20% increase in productivity
+
+References:
+Available upon request.
+
+I hope this sample resume helps! Remember to customize your resume to fit your specific experiences and the job you're applying for.

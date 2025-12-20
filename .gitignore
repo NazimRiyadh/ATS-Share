@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+.env
+.venv
+venv312/
+
+# IDEs
+.vscode/
+idea/
+
+# Project Specific
+rag_storage/
+rag_cache/
+*.log
+rag_storage/
+output/
+embeddings/
+
+# OS
+.DS_Store
+Thumbs.db

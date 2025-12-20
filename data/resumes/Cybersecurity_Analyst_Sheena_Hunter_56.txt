@@ -1,0 +1,65 @@
+Here's a professional resume for Sheena Hunter:
+
+Sheena Hunter
+Cybersecurity Analyst Candidate
+
+Contact Information:
+
+* Email: [sheena.hunter@email.com](mailto:sheena.hunter@email.com)
+* Phone: (555) 123-4567
+* LinkedIn: linkedin.com/in/sheenahunter
+* Twitter: @sheenahunter
+
+Professional Summary:
+Highly motivated and detail-oriented cybersecurity professional with 5+ years of experience in risk assessment, penetration testing, and encryption. Proven track record of identifying and mitigating security vulnerabilities, improving incident response, and ensuring compliance with regulatory requirements. Skilled in a range of cybersecurity tools and technologies, with a strong passion for staying up-to-date with emerging threats and trends.
+
+Technical Skills:
+
+* Risk assessment and management
+* Penetration testing and vulnerability assessment
+* Encryption and decryption
+* Network security and architecture
+* Incident response and management
+* Compliance and regulatory requirements (e.g. HIPAA, PCI-DSS)
+* Operating Systems (Windows, Linux, macOS)
+* Programming languages (Python, C++, Java)
+* Cybersecurity frameworks and standards (NIST, ISO 27001)
+* Cloud security (AWS, Azure, Google Cloud)
+
+Professional Experience:
+
+Senior Cybersecurity Analyst, XYZ Corporation (2018-Present)
+
+* Conducted risk assessments and penetration testing to identify and prioritize security vulnerabilities
+* Implemented encryption and decryption solutions to protect sensitive data
+* Developed and maintained incident response plans and procedures
+* Collaborated with cross-functional teams to ensure compliance with regulatory requirements
+* Provided training and awareness programs to employees on cybersecurity best practices
+
+Cybersecurity Analyst, ABC Startup (2015-2018)
+
+* Conducted vulnerability assessments and penetration testing to identify security weaknesses
+* Developed and implemented security policies and procedures
+* Collaborated with the development team to ensure secure coding practices
+* Provided technical support and guidance to employees on cybersecurity-related issues
+* Participated in incident response efforts to mitigate security breaches
+
+Achievements:
+
+* Identified and mitigated a critical vulnerability in the company's network, preventing a potential data breach and saving the company over $100,000 in potential losses
+* Developed and implemented a comprehensive encryption solution, protecting sensitive data and ensuring compliance with regulatory requirements
+* Improved incident response times by 30%, reducing mean time to detect (MTTD) and mean time to respond (MTTR)
+* Received the "Cybersecurity Analyst of the Year" award from XYZ Corporation for outstanding contributions to the company's cybersecurity program
+
+Education:
+
+* Bachelor's Degree in Computer Science, [University Name] (2015)
+
+Certifications:
+
+* CompTIA Security+
+* Certified Information Systems Security Professional (CISSP)
+* Offensive Security Certified Professional (OSCP)
+
+References:
+Available upon request.

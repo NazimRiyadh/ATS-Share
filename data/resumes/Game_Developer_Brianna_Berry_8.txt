@@ -1,0 +1,59 @@
+Here's a sample resume for Brianna Berry:
+
+Brianna Berry
+Contact Information:
+
+* Email: [briannaberry@email.com](mailto:briannaberry@email.com)
+* Phone: 555-555-5555
+* LinkedIn: linkedin.com/in/briannaberry
+* GitHub: github.com/briannaberry
+
+Summary:
+Highly motivated and skilled Game Developer with 5+ years of experience in creating immersive and engaging gaming experiences. Proficient in Unity, Unreal Engine, C#, and 3D modeling. Strong background in gameplay programming and a passion for innovation. Proven track record of delivering high-quality projects on time and on budget.
+
+Professional Experience:
+
+Senior Game Developer, Pixel Perfect Games (2018-Present)
+
+* Led the development of 2 AAA titles, including "Epic Quest" and "Galactic Odyssey"
+* Designed and implemented core gameplay mechanics, AI, and physics systems using C#
+* Collaborated with art team to create 3D models, textures, and animations using Maya and Substance Painter
+* Utilized Unity to create a scalable and performant game engine
+* Worked closely with QA team to identify and resolve bugs, resulting in a 95% reduction in reported issues
+
+Game Developer, Starlight Studios (2015-2018)
+
+* Contributed to the development of 3 mobile games, including "Space Invaders" and "Puzzle Quest"
+* Implemented gameplay features, such as power-ups, levels, and scoring systems using C#
+* Created 3D models and textures for characters and environments using Blender and Photoshop
+* Collaborated with designers to create user interface and user experience (UI/UX) elements
+* Participated in code reviews and ensured high-quality code standards
+
+Education:
+
+* Bachelor of Science in Computer Science, University of California, Los Angeles (2015)
+
+Skills:
+
+* Programming languages: C#, Unity Scripting, Unreal Engine Blueprints
+* Game development frameworks: Unity, Unreal Engine
+* 3D modeling and texturing: Maya, Blender, Substance Painter, Photoshop
+* Gameplay programming: AI, physics, graphics, audio, and UI/UX
+* Agile development methodologies: Scrum, Kanban
+
+Achievements:
+
+* Unity Certified Developer, Unity Technologies (2019)
+* Unreal Engine Certified Developer, Epic Games (2018)
+* Winner of the 2017 Indie Game Challenge, Game Developers Conference (GDC)
+* Published in the 2018 Game Developers Magazine, Game Developers Conference (GDC)
+
+Personal Projects:
+
+* "Echoes of Eternity", a 3D puzzle game developed in Unity, showcasing dynamic lighting and physics-based gameplay
+* "Aurora", a 2D platformer game developed in Unreal Engine, featuring procedurally generated levels and AI-powered enemies
+
+References:
+Available upon request.
+
+I hope this sample resume helps! Remember to customize your own resume to fit your specific experience and the job you're applying for.

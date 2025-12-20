@@ -1,0 +1,59 @@
+Here is a professional resume for Brian Gilbert Jr.:
+
+Brian Gilbert Jr.
+Full Stack Developer
+
+Contact Information:
+
+* Phone: (123) 456-7890
+* Email: [briangilbertjr@email.com](mailto:briangilbertjr@email.com)
+* LinkedIn: linkedin.com/in/briangilbertjr
+* GitHub: github.com/briangilbertjr
+
+Professional Summary:
+Highly motivated and detail-oriented Full Stack Developer with 3+ years of experience in building scalable and efficient web applications using HTML, CSS, React, and Node.js. Skilled in working with APIs, databases, and cloud-based infrastructure. Proficient in agile development methodologies and passionate about delivering high-quality software solutions.
+
+Technical Skills:
+
+* Programming languages: JavaScript, HTML, CSS
+* Frameworks: React, Node.js
+* Databases: MongoDB, PostgreSQL
+* APIs: RESTful APIs, GraphQL
+* Cloud platforms: AWS, Google Cloud
+* Agile methodologies: Scrum, Kanban
+* Version control: Git
+
+Professional Experience:
+
+Full Stack Developer, ABC Company (2020-Present)
+
+* Designed and developed multiple web applications using React, Node.js, and MongoDB
+* Integrated APIs with third-party services to enhance application functionality
+* Implemented security measures to protect against common web vulnerabilities
+* Collaborated with cross-functional teams to deliver high-quality software solutions
+* Participated in code reviews and ensured adherence to coding standards
+
+Junior Developer, DEF Startups (2018-2020)
+
+* Built and deployed multiple prototypes using HTML, CSS, and JavaScript
+* Worked on a team to develop a web application using React and Node.js
+* Assisted in troubleshooting and debugging issues with the application
+* Conducted research on new technologies and implemented them in the application
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2018)
+
+Achievements:
+
+* Completed a solo project, "Personal Finance Tracker," which was featured on GitHub and received positive feedback from the community
+* Successfully led a team to develop a web application, "Event Planner," which was showcased at a local hackathon
+* Participated in a hackathon, "CodeFest," where the team developed a web application, "Weather Forecast," which won 3rd place
+
+Certifications:
+
+* Certified Scrum Master (CSM), Scrum Alliance (2020)
+* Certified Node.js Developer, Node.js Foundation (2019)
+
+References:
+Available upon request.

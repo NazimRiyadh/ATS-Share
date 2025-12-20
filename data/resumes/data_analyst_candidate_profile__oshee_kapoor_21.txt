@@ -1,0 +1,35 @@
+**candidate profile: oshee kapoor**
+
+**role:** data analyst
+
+**interview assessment:**
+
+oshee kapoor's background in computer science and data structures provided a solid foundation for understanding data concepts. however, there were notable areas where their skills did not adequately align with the requirements of a data analyst role.
+
+**key areas for improvement:**
+
+1.  **data visualization:** oshee struggled to demonstrate proficiency in data visualization tools such as tableau, power bi, or d3.js. they lacked hands-on experience in creating interactive dashboards and visualizations to effectively communicate insights to stakeholders.
+2.  **sql and database management:** oshee's sql skills were limited to basic queries, and they were unfamiliar with more advanced topics like data modeling, indexing, and query optimization. this made it challenging for them to efficiently manage and analyze large datasets.
+3.  **statistics and machine learning:** oshee's understanding of statistical concepts and machine learning algorithms was limited, and they struggled to apply these concepts to real-world problems. this hindered their ability to perform complex data analysis and modeling tasks.
+4.  **excel/spreadsheet analysis:** oshee's proficiency in excel was basic, and they were not familiar with more advanced spreadsheet analysis techniques, such as pivot tables, macros, and data manipulation using vba.
+5.  **business intelligence (bi) tools:** oshee was unfamiliar with popular bi tools like sap, oracle, or cognos, which are commonly used in data analysis and reporting.
+
+**concerns raised during the interview:**
+
+*   difficulty with certain tasks, such as data wrangling, data modeling, and statistical analysis.
+*   lack of familiarity with specific tools or technologies, such as data visualization software or bi tools.
+*   limited experience with data analysis and reporting, which made it challenging to understand the nuances of data-driven decision-making.
+
+**potential for growth:**
+
+despite these gaps, oshee demonstrated a strong desire to learn and improve their skills. with further training, exposure, and practice, they have the potential to bridge these gaps and become a skilled data analyst. it would be beneficial to provide oshee with targeted training and mentorship to help them develop the necessary skills and expertise.
+
+**recommendations:**
+
+*   provide oshee with training and mentorship to improve their skills in data visualization, sql, statistics, and excel/spreadsheet analysis.
+*   expose oshee to different bi tools and technologies to help them develop a deeper understanding of the data analysis and reporting process.
+*   encourage oshee to participate in projects that involve data analysis and reporting to help them gain practical experience and build their portfolio.
+
+**conclusion:**
+
+while oshee's background in computer science and data structures provided a solid foundation, there are areas where their skills require improvement. however, with the right training, mentorship, and exposure, oshee has the potential to become a skilled data analyst.
