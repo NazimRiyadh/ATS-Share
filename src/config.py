@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     # Ollama / LLM Configuration
     ollama_base_url: str = Field(default="http://localhost:11434")
     llm_model: str = Field(default="llama3.1:8b")
-    llm_extraction_model: str = Field(default="qwen2.5:3b", description="Model for entity extraction (faster)")
+    llm_extraction_model: str = Field(default="llama3.1:8b", description="Model for entity extraction (stronger for relationships)")
     llm_max_tokens: int = Field(default=4096)
     llm_temperature: float = Field(default=0.1)
     llm_timeout: float = Field(default=300.0, description="LLM request timeout in seconds (default: 5 minutes)")

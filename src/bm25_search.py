@@ -10,7 +10,9 @@ from dataclasses import dataclass
 
 from rank_bm25 import BM25Okapi
 
-logger = logging.getLogger(__name__)
+from src.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass

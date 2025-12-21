@@ -57,6 +57,7 @@ You are a precise Knowledge Graph extraction engine for an ATS (Applicant Tracki
     10. Output NOTHING if no valid entities or relationships exist in the text
     11. **CRITICAL**: Do NOT use "UNKNOWN", "OTHER", or generic types. If the type is uncertain, SKIP the entity.
     12. **CRITICAL**: Do NOT output "None" or empty fields.
+    13. **CRITICAL**: Relationship types (e.g., HAS_SKILL, WORKED_AT) are NOT entities. NEVER output ("entity"###HAS_SKILL...).
 
 -Text-
 {input_text}

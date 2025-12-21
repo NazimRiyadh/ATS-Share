@@ -19,9 +19,10 @@ from src.dual_retrieval import (
     CandidateContext,
     chat_with_dual_retrieval
 )
+from src.logging_config import get_logger
 from api.routes.analyze import get_job_context
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
 
@@ -60,12 +61,29 @@ async def chat_about_job(request: JobChatRequest):
         # Prepare candidate context from stored analysis
         candidates = []
         for c in job_context.get("candidates", []):
+            # c is a dict from CandidatePreview.dict()
+            # Create meaningful content from available fields
+            content_parts = []
+            if c.get('match_reason'):
+                content_parts.append(f"Match Reason: {c['match_reason']}")
+            if c.get('skills_matched'):
+                content_parts.append(f"Skills: {', '.join(c['skills_matched'])}")
+            if c.get('experience_summary'):
+                content_parts.append(f"Experience: {c['experience_summary']}")
+            
+            content = " | ".join(content_parts) if content_parts else "No details available"
+            
             candidates.append(CandidateContext(
-                name=c.name if hasattr(c, 'name') else c.get('name', 'Unknown'),
-                content=str(c.highlights) if hasattr(c, 'highlights') else str(c.get('highlights', [])),
-                score=c.score if hasattr(c, 'score') else c.get('score', 0.0),
-                metadata={}
+                name=c.get('name', 'Unknown'),
+                content=content,
+                score=c.get('score', 0.0),
+                metadata=c
             ))
+        
+        # DEBUG: Log prepared candidates
+        logger.info(f"🔍 Prepared {len(candidates)} candidates from stored context")
+        for i, c in enumerate(candidates, 1):
+            logger.info(f"   {i}. {c.name} - {c.content[:80]}...")
         
         # Construct enhanced query with job context
         enhanced_query = f"""

@@ -34,7 +34,10 @@ async def inspect():
         FROM pg_catalog.pg_tables 
         WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';
     """)
-    print(tabulate(tables, headers=["Schema", "Table"], tablefmt="simple"))
+    
+    # Convert Record objects to simple list of lists
+    table_rows = [[r['schemaname'], r['tablename']] for r in tables]
+    print(tabulate(table_rows, headers=["Schema", "Table"], tablefmt="simple"))
     print("-" * 40)
 
     # 2. Check Row Counts & Vector Dimensions

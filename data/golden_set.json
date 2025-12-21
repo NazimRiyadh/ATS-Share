@@ -1,0 +1,27 @@
+[
+  {
+    "query": "Find an AI Engineer",
+    "expected_candidates": ["Raghu", "Rajesh", "Christine Lopez"],
+    "min_expected": 1
+  },
+  {
+    "query": "Find a Blockchain Developer with experience in smart contracts",
+    "expected_candidates": ["Jason White", "Courtney Conner"],
+    "min_expected": 1
+  },
+  {
+    "query": "Find a Data Scientist with Python experience",
+    "expected_candidates": ["Anthony Harris", "Brinda Bhardwaj"],
+    "min_expected": 1
+  },
+  {
+    "query": "Who has experience with Kubernetes?",
+    "expected_candidates": ["Joshua Wagner", "Joe Proctor", "Rachel Oneill"],
+    "min_expected": 1
+  },
+  {
+    "query": "Find a creative Writer",
+    "expected_candidates": ["Bryan Ortiz", "Jennifer Gordon"],
+    "min_expected": 1
+  }
+]

@@ -62,7 +62,9 @@ try:
 except Exception as e:
     print(f"Failed to apply LightRAG lock patch: {e}")
 
-logger = logging.getLogger(__name__)
+from src.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def _setup_environment():
@@ -180,6 +182,7 @@ class RAGManager:
                     Robust splitting function that handles mismatched field counts.
                     Original raises 'found X/Y fields' error.
                     This version pads missing fields or merges extra fields.
+                    AND performs Entity Resolution (cleaning/standardization).
                     """
                     if not markers:
                         return [content.strip()]
@@ -193,13 +196,76 @@ class RAGManager:
                     
                     results = [r.strip() for r in results if r.strip()]
                     
-                    # SMART FIX: Auto-correct mislabeled relationships
-                    # If we find 5 fields labeled as "entity", change it to "relationship"
-                    # This fixes the issue where Llama 3.1 outputs ("entity", src, rel, tgt, ev)
-                    if len(results) == 5 and results[0] and "entity" in results[0].lower():
+                    if not results:
+                        return []
+                        
+                    # Normalize first token to check type (safely ignore quotes/parens)
+                    first_token = results[0].lower().strip('("')
+    
+                    # ---------------------------------------------------------
+                    # SMART FIX 1: Auto-correct mislabeled relationships
+                    # LLM sometimes outputs ("entity"###Src###REL###Tgt###Desc)
+                    # which is actually a relationship with wrong label
+                    # ---------------------------------------------------------
+                    if len(results) >= 5 and "entity" in first_token:
                         results[0] = results[0].lower().replace("entity", "relationship")
-                        # print(f"DEBUG: Smart-corrected 'entity' -> 'relationship' for {results}")
-                    
+                        first_token = "relationship"
+
+                    # ---------------------------------------------------------
+                    # SMART FIX 2: Enforce strict field counts (Truncate/Pad)
+                    # ---------------------------------------------------------
+                    if "entity" in first_token:
+                        # Expected: ("entity", Name, Type, Description) -> 4 fields
+                        if len(results) > 4:
+                            results = results[:4]  # Truncate extra fields
+                        elif len(results) < 4:
+                            missing = 4 - len(results)
+                            results.extend(["Description not provided"] * missing)
+                            
+                    elif "relationship" in first_token:
+                        # Expected: ("relationship", Src, Rel, Tgt, Desc) -> 5 fields
+                        if len(results) > 5:
+                            results = results[:5]  # Truncate extra fields
+                        elif len(results) < 5:
+                            missing = 5 - len(results)
+                            results.extend(["Evidence not provided"] * missing)
+
+                    # =========================================================
+                    # ENTITY RESOLUTION INTEGRATION
+                    # =========================================================
+                    try:
+                        # Lazy import to avoid circular dependencies if any
+                        from src.entity_resolver import get_entity_resolver
+                        resolver = get_entity_resolver()
+                        
+                        if "entity" in first_token and len(results) >= 3:
+                            # Format: ("entity", Name, Type, Description)
+                            entity_name = results[1]
+                            entity_type = results[2]
+                            
+                            resolved = resolver.resolve_entity(entity_name, entity_type)
+                            results[1] = resolved.canonical
+                            
+                            # Optional: Update type if resolver corrected it (e.g. inferred from name)
+                            # results[2] = resolved.entity_type.value
+                            
+                        elif "relationship" in first_token and len(results) >= 3:
+                            # Format: ("relationship", Src, RelType, Tgt, Desc)
+                            rel_type = results[2]
+                            is_valid, canonical_type = resolver.validate_relationship_type(rel_type)
+                            results[2] = canonical_type
+                            
+                            # Also resolve source/target names if possible? 
+                            # Ideally yes, but we don't know their types easily here.
+                            # For now, just clean the names basic
+                            results[1] = resolver._clean_entity_name(results[1])
+                            if len(results) > 3:
+                                results[3] = resolver._clean_entity_name(results[3])
+                                
+                    except Exception as e:
+                        # Fail safe - don't stop ingestion if resolution crashes
+                        pass
+
                     return results
 
                 # Overwrite the utility function directly in utils

@@ -1,0 +1,45 @@
+{
+  "stored_candidates": [
+    {
+      "name": "Unknown Candidate",
+      "score": 0.52,
+      "match_reason": "Strong match: Docker, AWS, Python + 0 more",
+      "skills_matched": [
+        "Docker",
+        "AWS",
+        "Python"
+      ],
+      "experience_summary": "engineer"
+    },
+    {
+      "name": "Engineer Joshua",
+      "score": 0.5,
+      "match_reason": "Strong match: Docker, AWS, Python + 0 more",
+      "skills_matched": [
+        "Docker",
+        "AWS",
+        "Python"
+      ],
+      "experience_summary": "Engineer"
+    },
+    {
+      "name": "Joe Proctor",
+      "score": 0.477,
+      "match_reason": "Strong match: Docker, AWS, Python + 0 more",
+      "skills_matched": [
+        "Docker",
+        "AWS",
+        "Python"
+      ],
+      "experience_summary": "Engineer"
+    }
+  ],
+  "names_mentioned": [],
+  "skills_mentioned": [
+    "AWS",
+    "Python",
+    "Docker"
+  ],
+  "response": "Based on the provided document chunks, here are the candidates that match the job requirements of a senior Python developer with Docker and AWS:\n\n* **Michael Chen**: Data Engineer with 4 years of experience in building robust data pipelines, ETL processes, and analytics platforms. Skilled in Python, Apache Spark, and cloud data services.\n\t+ Key skills: Programming Languages (Python), Big Data (Apache Spark), Databases (PostgreSQL, Snowflake, BigQuery, Redshift), Cloud (AWS, GCP)\n* **Rachel Oneill**: DevOps Engineer with a strong background in CI/CD, Kubernetes, Ansible, and Infrastructure as Code. Proven track record of improving application delivery and deployment processes.\n\t+ Key skills: CI/CD Tools (Jenkins, GitLab CI), Containerization (Docker, Kubernetes), Infrastructure as Code (Terraform, Ansible), Cloud Platforms (AWS, Azure)\n* **Brinda Bhardwaj**: Data Scientist with expertise in machine learning, statistics, and data visualization. Experienced in working with big data and programming languages like Python and R.\n\t+ Key skills: Machine Learning (scikit-learn, TensorFlow, PyTorch), Statistics (statistical inference, hypothesis testing, regression analysis), Data Visualization (Tableau, Power BI, D3.js), Big Data (data warehousing, data marts, data lakes)\n\nThese candidates have relevant experience and skills in Python, Docker, and AWS, making them suitable for the job requirements.",
+  "context_used": false
+}

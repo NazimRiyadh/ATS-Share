@@ -13,12 +13,16 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, Form, Background
 
 from api.models import (
     IngestionResponse,
+    AsyncIngestionResponse,
     BatchIngestionRequest,
     BatchIngestionResponse
 )
-from src.ingestion import ingest_resume, ingest_resumes_from_directory
+from src.services.ingestion_service import ingest_resumes_from_directory
+from src.worker import ingest_resume_task
+from celery.result import AsyncResult
+from src.logging_config import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 router = APIRouter(prefix="/ingest", tags=["Ingestion"])
 
 # Upload directory
@@ -26,15 +30,14 @@ UPLOAD_DIR = Path("./data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
-@router.post("", response_model=IngestionResponse)
+@router.post("", response_model=AsyncIngestionResponse)
 async def ingest_single_resume(
     file: UploadFile = File(...),
     candidate_name: Optional[str] = Form(None)
 ):
     """
-    Upload and ingest a single resume file.
-    
-    Supports PDF, DOCX, and TXT formats.
+    Upload and ingest a single resume file asynchronously.
+    Returns a task_id to track progress.
     """
     start_time = datetime.now()
     
@@ -59,43 +62,38 @@ async def ingest_single_resume(
         
         logger.info(f"Saved upload: {file_path}")
         
-        # Ingest the resume
-        try:
-            result = await ingest_resume(str(file_path))
-        except Exception as e:
-            logger.error(f"Ingestion exception: {e}", exc_info=True)
-            # Cleanup on failure
-            if file_path.exists():
-                file_path.unlink()
-            raise HTTPException(
-                status_code=500,
-                detail=f"Ingestion failed with exception: {str(e)}"
-            )
+        # Dispatch Celery task
+        task = ingest_resume_task.delay(str(file_path), metadata={"candidate_name": candidate_name})
         
-        processing_time = (datetime.now() - start_time).total_seconds()
-        
-        if result.success:
-            return IngestionResponse(
-                success=True,
-                message="Resume ingested successfully",
-                file_path=str(file_path),
-                candidate_name=candidate_name or result.candidate_name,
-                processing_time=processing_time
-            )
-        else:
-            # Cleanup on failure
-            if file_path.exists():
-                file_path.unlink()
-            raise HTTPException(
-                status_code=500,
-                detail=f"Ingestion failed: {result.error}"
-            )
+        return AsyncIngestionResponse(
+            task_id=task.id,
+            status="processing",
+            message="Resume ingestion task submitted"
+        )
             
     except Exception as e:
         logger.error(f"Upload/ingestion error: {e}")
         # Cleanup on failure
         if file_path.exists():
             file_path.unlink()
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/status/{task_id}")
+async def get_task_status(task_id: str):
+    """
+    Check status of an ingestion task.
+    """
+    try:
+        task_result = AsyncResult(task_id)
+        
+        response = {
+            "task_id": task_id,
+            "status": task_result.status,
+            "result": task_result.result if task_result.ready() else None
+        }
+        return response
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 

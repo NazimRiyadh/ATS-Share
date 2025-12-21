@@ -1,26 +1,26 @@
 """
-Entity Resolution Module with Fixed Ontology.
+Entity Resolution Module with Dynamic Ontology.
 Normalizes entities before storage to prevent duplicates.
+Loads ontology from data/ontology.json.
 Uses RapidFuzz for fast fuzzy matching.
 """
 
 import logging
+import json
 import re
-from typing import Dict, List, Optional, Tuple, Set
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Set, Any
 from dataclasses import dataclass
 from enum import Enum
 
 from rapidfuzz import fuzz, process
 
-logger = logging.getLogger(__name__)
+from src.logging_config import get_logger
 
-
-# =============================================================================
-# FIXED ONTOLOGY
-# =============================================================================
+logger = get_logger(__name__)
 
 class EntityType(str, Enum):
-    """Fixed entity types for the ATS knowledge graph."""
+    """Core entity types for the ATS knowledge graph."""
     PERSON = "PERSON"
     SKILL = "SKILL"
     COMPANY = "COMPANY"
@@ -31,7 +31,7 @@ class EntityType(str, Enum):
 
 
 class RelationType(str, Enum):
-    """Fixed relationship types for the ATS knowledge graph."""
+    """Core relationship types for the ATS knowledge graph."""
     HAS_SKILL = "HAS_SKILL"
     WORKED_AT = "WORKED_AT"
     HAS_ROLE = "HAS_ROLE"
@@ -40,179 +40,6 @@ class RelationType(str, Enum):
     HAS_EDUCATION = "HAS_EDUCATION"
     WORKED_WITH = "WORKED_WITH"  # Colleague/team relationships
 
-
-# =============================================================================
-# CANONICAL SKILLS LIST (Top 250 - expandable over time)
-# =============================================================================
-
-CANONICAL_SKILLS = {
-    # Programming Languages
-    "Python", "JavaScript", "TypeScript", "Java", "C++", "C#", "C", "Go", "Rust",
-    "Ruby", "PHP", "Swift", "Kotlin", "Scala", "R", "MATLAB", "Perl", "Shell",
-    "Bash", "PowerShell", "SQL", "NoSQL", "GraphQL",
-    
-    # Frontend
-    "React", "Angular", "Vue.js", "Next.js", "Svelte", "HTML", "CSS", "SASS",
-    "Tailwind CSS", "Bootstrap", "jQuery", "Redux", "Webpack", "Vite",
-    
-    # Backend
-    "Node.js", "Django", "Flask", "FastAPI", "Spring Boot", "Express.js",
-    "Ruby on Rails", "ASP.NET", "Laravel", "NestJS", "Gin", "Echo",
-    
-    # Databases
-    "PostgreSQL", "MySQL", "MongoDB", "Redis", "Elasticsearch", "Cassandra",
-    "DynamoDB", "SQLite", "Oracle", "SQL Server", "Neo4j", "Firebase",
-    
-    # Cloud & DevOps
-    "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "Ansible",
-    "Jenkins", "GitLab CI", "GitHub Actions", "CircleCI", "Nginx", "Apache",
-    "Linux", "Unix", "Windows Server",
-    
-    # Data & ML
-    "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch", "Scikit-learn",
-    "Pandas", "NumPy", "Keras", "NLP", "Computer Vision", "Data Science",
-    "Data Analysis", "Data Engineering", "ETL", "Apache Spark", "Hadoop",
-    "Airflow", "dbt", "Tableau", "Power BI", "Looker",
-    
-    # Mobile
-    "iOS", "Android", "React Native", "Flutter", "SwiftUI", "Jetpack Compose",
-    
-    # Testing
-    "Jest", "Pytest", "JUnit", "Selenium", "Cypress", "Playwright", "TDD",
-    "BDD", "Unit Testing", "Integration Testing", "E2E Testing",
-    
-    # Architecture & Patterns
-    "Microservices", "REST API", "GraphQL", "gRPC", "OAuth", "JWT",
-    "CI/CD", "Agile", "Scrum", "Kanban", "Design Patterns", "SOLID",
-    
-    # Tools & Platforms
-    "Git", "GitHub", "GitLab", "Bitbucket", "Jira", "Confluence",
-    "Slack", "VS Code", "IntelliJ", "Figma", "Postman",
-    
-    # Soft Skills
-    "Leadership", "Communication", "Problem Solving", "Teamwork",
-    "Project Management", "Time Management", "Critical Thinking",
-    
-    # Certifications (treated as skills for matching)
-    "AWS Certified", "Azure Certified", "GCP Certified", "PMP",
-    "Scrum Master", "CISSP", "CPA", "CFA", "Six Sigma",
-}
-
-# Variations mapping to canonical names
-SKILL_VARIATIONS = {
-    # JavaScript variations
-    "js": "JavaScript",
-    "javascript": "JavaScript",
-    "java script": "JavaScript",
-    "ecmascript": "JavaScript",
-    
-    # TypeScript variations
-    "ts": "TypeScript",
-    "typescript": "TypeScript",
-    "type script": "TypeScript",
-    
-    # React variations
-    "reactjs": "React",
-    "react.js": "React",
-    "react js": "React",
-    
-    # Node.js variations
-    "nodejs": "Node.js",
-    "node": "Node.js",
-    "node.js": "Node.js",
-    
-    # Vue.js variations
-    "vuejs": "Vue.js",
-    "vue": "Vue.js",
-    "vue.js": "Vue.js",
-    
-    # Angular variations
-    "angularjs": "Angular",
-    "angular.js": "Angular",
-    
-    # Python frameworks
-    "django rest framework": "Django",
-    "drf": "Django",
-    
-    # Databases
-    "postgres": "PostgreSQL",
-    "psql": "PostgreSQL",
-    "mongo": "MongoDB",
-    "elastic": "Elasticsearch",
-    "es": "Elasticsearch",
-    
-    # Cloud
-    "amazon web services": "AWS",
-    "amazon aws": "AWS",
-    "google cloud": "GCP",
-    "google cloud platform": "GCP",
-    "microsoft azure": "Azure",
-    
-    # DevOps
-    "k8s": "Kubernetes",
-    "kube": "Kubernetes",
-    "github actions": "GitHub Actions",
-    "gitlab ci/cd": "GitLab CI",
-    
-    # ML/AI
-    "ml": "Machine Learning",
-    "dl": "Deep Learning",
-    "ai": "Machine Learning",
-    "artificial intelligence": "Machine Learning",
-    "natural language processing": "NLP",
-    "cv": "Computer Vision",
-    
-    # C++ variations
-    "c plus plus": "C++",
-    "cplusplus": "C++",
-    "cpp": "C++",
-    
-    # C# variations
-    "csharp": "C#",
-    "c sharp": "C#",
-    
-    # .NET variations
-    "dotnet": "ASP.NET",
-    ".net": "ASP.NET",
-    ".net core": "ASP.NET",
-    "aspnet": "ASP.NET",
-}
-
-# =============================================================================
-# CANONICAL COMPANIES (Top tech companies - expandable)
-# =============================================================================
-
-CANONICAL_COMPANIES = {
-    "Google", "Amazon", "Microsoft", "Apple", "Meta", "Facebook", "Netflix",
-    "Tesla", "Uber", "Airbnb", "Salesforce", "Oracle", "IBM", "Intel",
-    "Adobe", "Nvidia", "PayPal", "Shopify", "Stripe", "Twilio", "Zoom",
-    "Slack", "Spotify", "LinkedIn", "Twitter", "X", "TikTok", "ByteDance",
-    "Alibaba", "Tencent", "Samsung", "Sony", "Cisco", "VMware", "Dell",
-    "HP", "Accenture", "Deloitte", "McKinsey", "BCG", "Bain", "Goldman Sachs",
-    "Morgan Stanley", "JPMorgan", "Bank of America", "Citadel", "Jane Street",
-}
-
-COMPANY_VARIATIONS = {
-    "fb": "Meta",
-    "facebook": "Meta",
-    "facebook inc": "Meta",
-    "meta platforms": "Meta",
-    "google inc": "Google",
-    "google llc": "Google",
-    "alphabet": "Google",
-    "amazon.com": "Amazon",
-    "amazon inc": "Amazon",
-    "msft": "Microsoft",
-    "microsoft corp": "Microsoft",
-    "apple inc": "Apple",
-    "x corp": "X",
-    "twitter inc": "Twitter",
-}
-
-
-# =============================================================================
-# ENTITY RESOLVER CLASS
-# =============================================================================
 
 @dataclass
 class ResolvedEntity:
@@ -227,8 +54,10 @@ class ResolvedEntity:
 class EntityResolver:
     """
     Resolves and normalizes entities using fuzzy matching.
-    Enforces fixed ontology for entity and relationship types.
+    Loads ontology dynamically from JSON.
     """
+    
+    ONTOLOGY_FILE = Path("data/ontology.json")
     
     def __init__(
         self,
@@ -237,22 +66,43 @@ class EntityResolver:
     ):
         self.fuzzy_threshold = fuzzy_threshold
         self.strict_mode = strict_mode
+        self._load_ontology()
         
+    def _load_ontology(self):
+        """Load ontology data from JSON file."""
+        if not self.ONTOLOGY_FILE.exists():
+            logger.warning(f"Ontology file not found at {self.ONTOLOGY_FILE}. Using empty defaults.")
+            self._canonical_skills = set()
+            self._canonical_companies = set()
+            self._skill_variations = {}
+            self._company_variations = {}
+        else:
+            try:
+                with open(self.ONTOLOGY_FILE, "r") as f:
+                    data = json.load(f)
+                    self._canonical_skills = set(data.get("canonical_skills", []))
+                    self._canonical_companies = set(data.get("canonical_companies", []))
+                    self._skill_variations = data.get("skill_variations", {})
+                    self._company_variations = data.get("company_variations", {})
+                    logger.info(f"Loaded ontology: {len(self._canonical_skills)} skills, {len(self._canonical_companies)} companies")
+            except Exception as e:
+                logger.error(f"Failed to load ontology: {e}")
+                # Fallback to empty
+                self._canonical_skills = set()
+                self._canonical_companies = set()
+                self._skill_variations = {}
+                self._company_variations = {}
+
         # Build lowercase lookup maps for faster matching
-        self._skill_lookup = {s.lower(): s for s in CANONICAL_SKILLS}
-        self._company_lookup = {c.lower(): c for c in CANONICAL_COMPANIES}
-        self._skill_variations = {k.lower(): v for k, v in SKILL_VARIATIONS.items()}
-        self._company_variations = {k.lower(): v for k, v in COMPANY_VARIATIONS.items()}
+        self._skill_lookup = {s.lower(): s for s in self._canonical_skills}
+        self._company_lookup = {c.lower(): c for c in self._canonical_companies}
+        # Normalize keys in variations maps
+        self._skill_variations = {k.lower(): v for k, v in self._skill_variations.items()}
+        self._company_variations = {k.lower(): v for k, v in self._company_variations.items()}
     
     def resolve_skill(self, skill: str) -> ResolvedEntity:
         """
         Resolve a skill to its canonical form.
-        
-        Args:
-            skill: Raw skill string from extraction
-            
-        Returns:
-            ResolvedEntity with canonical name
         """
         original = skill.strip()
         normalized = original.lower()
@@ -280,27 +130,28 @@ class EntityResolver:
             )
         
         # Step 3: Fuzzy match against canonical skills
-        match = process.extractOne(
-            normalized,
-            self._skill_lookup.keys(),
-            scorer=fuzz.ratio
-        )
-        
-        if match and match[1] >= self.fuzzy_threshold:
-            canonical = self._skill_lookup[match[0]]
-            return ResolvedEntity(
-                original=original,
-                canonical=canonical,
-                entity_type=EntityType.SKILL,
-                confidence=match[1] / 100.0,
-                is_known=True
+        if self._skill_lookup:
+            match = process.extractOne(
+                normalized,
+                self._skill_lookup.keys(),
+                scorer=fuzz.ratio
             )
+            
+            if match and match[1] >= self.fuzzy_threshold:
+                canonical = self._skill_lookup[match[0]]
+                return ResolvedEntity(
+                    original=original,
+                    canonical=canonical,
+                    entity_type=EntityType.SKILL,
+                    confidence=match[1] / 100.0,
+                    is_known=True
+                )
         
-        # Step 4: Unknown skill - return cleaned version or reject
+        # Step 4: Unknown skill
         if self.strict_mode:
             return ResolvedEntity(
                 original=original,
-                canonical=original.title(),  # Title case for unknown
+                canonical=original.title(),
                 entity_type=EntityType.SKILL,
                 confidence=0.0,
                 is_known=False
@@ -312,19 +163,13 @@ class EntityResolver:
             original=original,
             canonical=canonical,
             entity_type=EntityType.SKILL,
-            confidence=0.5,  # Medium confidence for unknown
+            confidence=0.5,
             is_known=False
         )
     
     def resolve_company(self, company: str) -> ResolvedEntity:
         """
         Resolve a company to its canonical form.
-        
-        Args:
-            company: Raw company string from extraction
-            
-        Returns:
-            ResolvedEntity with canonical name
         """
         original = company.strip()
         normalized = original.lower()
@@ -357,23 +202,24 @@ class EntityResolver:
             )
         
         # Step 3: Fuzzy match
-        match = process.extractOne(
-            normalized,
-            self._company_lookup.keys(),
-            scorer=fuzz.ratio
-        )
-        
-        if match and match[1] >= self.fuzzy_threshold:
-            canonical = self._company_lookup[match[0]]
-            return ResolvedEntity(
-                original=original,
-                canonical=canonical,
-                entity_type=EntityType.COMPANY,
-                confidence=match[1] / 100.0,
-                is_known=True
+        if self._company_lookup:
+            match = process.extractOne(
+                normalized,
+                self._company_lookup.keys(),
+                scorer=fuzz.ratio
             )
+            
+            if match and match[1] >= self.fuzzy_threshold:
+                canonical = self._company_lookup[match[0]]
+                return ResolvedEntity(
+                    original=original,
+                    canonical=canonical,
+                    entity_type=EntityType.COMPANY,
+                    confidence=match[1] / 100.0,
+                    is_known=True
+                )
         
-        # Unknown company - return cleaned version
+        # Unknown company
         canonical = self._clean_entity_name(original)
         return ResolvedEntity(
             original=original,
@@ -390,13 +236,6 @@ class EntityResolver:
     ) -> ResolvedEntity:
         """
         Resolve any entity based on its type.
-        
-        Args:
-            entity: Raw entity string
-            entity_type: Type of entity (SKILL, COMPANY, etc.)
-            
-        Returns:
-            ResolvedEntity with canonical name
         """
         entity_type_upper = entity_type.upper()
         
@@ -423,12 +262,6 @@ class EntityResolver:
     def validate_relationship_type(self, rel_type: str) -> Tuple[bool, str]:
         """
         Validate and normalize relationship type.
-        
-        Args:
-            rel_type: Raw relationship type from extraction
-            
-        Returns:
-            Tuple of (is_valid, canonical_type)
         """
         normalized = rel_type.upper().replace(" ", "_").replace("-", "_")
         
@@ -457,8 +290,7 @@ class EntityResolver:
             RelationType(normalized)
             return True, normalized
         except ValueError:
-            # Default to most common relationship
-            logger.warning(f"Unknown relationship type '{rel_type}', defaulting to HAS_SKILL")
+            # Default to most common relationship if unknown or log it
             return False, "HAS_SKILL"
     
     def _clean_entity_name(self, name: str) -> str:

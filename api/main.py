@@ -17,6 +17,7 @@ from fastapi.responses import JSONResponse
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.config import settings
+from src.logging_config import configure_logging, get_logger
 from src.rag_config import get_rag_manager
 from src.llm_adapter import get_ollama_adapter
 from api.middleware import setup_middleware, setup_exception_handlers
@@ -24,11 +25,8 @@ from api.routes import ingest, analyze, chat
 from api.models import HealthResponse, StatsResponse
 
 # Configure logging
-logging.basicConfig(
-    level=getattr(logging, settings.log_level.upper()),
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
+configure_logging()
+logger = get_logger(__name__)
 
 
 @asynccontextmanager

@@ -78,6 +78,13 @@ class IngestionResponse(BaseModel):
     processing_time: float
 
 
+class AsyncIngestionResponse(BaseModel):
+    """Response for async ingestion task submission."""
+    task_id: str
+    status: str
+    message: str
+
+
 class BatchIngestionResponse(BaseModel):
     """Response for batch ingestion."""
     success: bool

@@ -20,12 +20,13 @@ from api.models import (
     JobAnalysisResponse,
     CandidatePreview
 )
+from src.logging_config import get_logger
 from src.rag_config import get_rag
 from src.reranker import rerank_func
 from src.bm25_search import hybrid_search
 from lightrag import QueryParam
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 router = APIRouter(prefix="/analyze", tags=["Analysis"])
 
 # ==================== PRODUCTION CONSTANTS ====================

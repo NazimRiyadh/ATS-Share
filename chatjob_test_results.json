@@ -1,0 +1,7 @@
+{
+  "health_check": true,
+  "analyze": true,
+  "chat_job": true,
+  "context_used": false,
+  "response_complete": false
+}

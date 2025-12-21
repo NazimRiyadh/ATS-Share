@@ -8,9 +8,10 @@ from typing import Callable
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from api.models import ErrorResponse, ErrorDetail
+from src.logging_config import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 def setup_middleware(app: FastAPI) -> None:

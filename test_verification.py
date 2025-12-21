@@ -11,8 +11,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from src.logging_config import get_logger, configure_logging
+
+configure_logging()
+logger = get_logger(__name__)
 
 async def test_ingestion():
     """Test ingestion with a single resume."""

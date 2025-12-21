@@ -7,7 +7,9 @@ import logging
 from pathlib import Path
 from typing import Optional, Tuple
 
-logger = logging.getLogger(__name__)
+from src.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def parse_pdf(file_path: str) -> str:

@@ -13,8 +13,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 async def main(args):
     """Run batch ingestion."""
-    from src.ingestion import ingest_resumes_from_directory
+    from src.services.ingestion_service import ResumeIngestionService
     from src.rag_config import get_rag_manager
+    from tqdm import tqdm
     
     print("\n" + "="*50)
     print("LightRAG ATS - Resume Ingestion")
@@ -43,11 +44,22 @@ async def main(args):
     # Run ingestion
     print("Starting ingestion...\n")
     
-    result = await ingest_resumes_from_directory(
+    service = ResumeIngestionService()
+    
+    # Create progress bar wrapper
+    pbar = tqdm(desc="Ingesting", unit="doc")
+    
+    def progress_callback(inc):
+        pbar.update(inc)
+        
+    result = await service.ingest_batch(
         directory=str(directory),
         batch_size=args.batch_size,
-        force=args.force
+        force=args.force,
+        on_progress=progress_callback
     )
+    
+    pbar.close()
     
     # Print summary
     print("\n" + "="*50)

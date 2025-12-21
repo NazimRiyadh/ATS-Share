@@ -12,7 +12,9 @@ from lightrag import LightRAG, QueryParam
 from .config import settings
 from .prompts import CHAT_RESPONSE_PROMPT
 
-logger = logging.getLogger(__name__)
+from src.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -205,22 +207,24 @@ class DualLevelRetrieval:
 
 
 # Grounding wrapper prompt to prevent LLM hallucination
-GROUNDING_PROMPT = """You are an ATS (Applicant Tracking System) assistant answering questions about candidate resumes.
+GROUNDING_PROMPT = """You are a helpful ATS assistant helping a recruiter find the right candidates.
 
-⚠️ CRITICAL RULES:
-1. Answer ONLY using the RESUME DATA below - nothing else
-2. DO NOT talk about yourself or your capabilities
-3. List candidates as bullet points with their qualifications
-4. If data is not available, say "This information is not in the resume data."
-5. ALWAYS provide a complete answer - don't end with colons or incomplete sentences
-
-## RESUME DATA:
+CONTEXT - Candidate Information:
 {context}
 
-## USER QUESTION:
+USER QUESTION:
 {query}
 
-## YOUR COMPLETE ANSWER (list matching candidates as bullet points):
+INSTRUCTIONS:
+- Answer the question directly and naturally, like a helpful colleague
+- Use ONLY the candidate information provided above
+- If you mention a candidate, include their relevant skills and experience
+- If no candidates match, say "I don't see any candidates matching that requirement"
+- Be concise and specific - focus on what the recruiter asked
+- DO NOT use phrases like "based on the document chunks" or "according to the data"
+- DO NOT talk about your limitations or how you process information
+
+YOUR ANSWER:
 """
 
 
@@ -250,6 +254,59 @@ async def chat_with_dual_retrieval(
     
     retrieval = DualLevelRetrieval(rag)
     
+    # MODIFIED: If candidates provided (from /analyze), use ONLY them - skip RAG query
+    if candidates:
+        logger.info(f"🎯 Using ONLY pre-analyzed candidates (skipping full graph query)")
+        
+        # Build context from candidates only
+        candidate_section = "## ANALYZED CANDIDATES:\n\n"
+        for c in candidates:
+            candidate_section += f"**{c.name}** (Match Score: {c.score:.1%})\n"
+            candidate_section += f"{c.content}\n\n"
+        
+        # DEBUG: Log what we're using
+        logger.info(f"📋 Using {len(candidates)} pre-analyzed candidates")
+        for i, c in enumerate(candidates, 1):
+            logger.info(f"   {i}. {c.name} (Score: {c.score:.2f})")
+        
+        grounded_prompt = GROUNDING_PROMPT.format(
+            context=candidate_section,
+            query=query
+        )
+        
+        try:
+            grounded_response = await ollama_llm_func(grounded_prompt)
+            
+            # Validate response against candidate context
+            validation_result = validate_grounded_response(grounded_response, candidate_section)
+            
+            if validation_result["valid"]:
+                logger.info("✅ Generated validated response from pre-analyzed candidates")
+                return {
+                    "response": grounded_response,
+                    "mode_used": "candidates-only (grounded)",
+                    "fallback_used": False,
+                    "sources": {"candidates": len(candidates), "total_context": len(candidate_section)}
+                }
+            else:
+                logger.warning(f"⚠️  Response validation failed: {validation_result['reason']}")
+                # Still return the response but mark as unvalidated
+                return {
+                    "response": grounded_response,
+                    "mode_used": "candidates-only (unvalidated)",
+                    "fallback_used": False,
+                    "sources": {"candidates": len(candidates), "total_context": len(candidate_section)}
+                }
+        except Exception as e:
+            logger.error(f"LLM call failed: {e}")
+            return {
+                "response": f"Error generating response from candidates: {str(e)}",
+                "mode_used": "error",
+                "fallback_used": True,
+                "sources": {"candidates": len(candidates)}
+            }
+    
+    # ORIGINAL FLOW: No candidates provided - do full RAG retrieval
     # Step 1: Get raw context using only_need_context parameter
     # This bypasses LightRAG's internal LLM call and returns raw chunks
     try:
@@ -272,23 +329,23 @@ async def chat_with_dual_retrieval(
         try:
             grounded_response = await ollama_llm_func(grounded_prompt)
             
-            # AUDIT FIX 3: Validate LLM response references actual context
+            # Validate LLM response references actual context
             validation_result = validate_grounded_response(grounded_response, raw_context)
             
             if validation_result["valid"]:
                 logger.info("✅ Generated validated grounded response")
                 return {
                     "response": grounded_response,
-                    "mode_used": "naive (grounded, validated)",
+                    "mode_used": f"{mode} (grounded, validated)",
                     "fallback_used": False,
                     "sources": {"rag": len(raw_context), "total": len(raw_context)}
                 }
             else:
-                logger.warning(f"⚠️ LLM response failed validation: {validation_result['reason']}")
+                logger.warning(f"⚠️  LLM response failed validation: {validation_result['reason']}")
                 # Return a safe response instead of potentially hallucinated content
                 return {
                     "response": f"Based on the resume data, I found relevant candidates but cannot provide specific details. {validation_result['reason']}",
-                    "mode_used": "naive (grounded, validation failed)",
+                    "mode_used": f"{mode} (grounded, validation failed)",
                     "fallback_used": True,
                     "sources": {"rag": len(raw_context), "total": len(raw_context)}
                 }
