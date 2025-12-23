@@ -89,12 +89,85 @@ graph TB
 ### Prerequisites
 
 - **OS**: Windows 10/11 (currently configured for Windows)
-- **Python**: 3.10 or higher
-- **Docker Desktop**: For PostgreSQL and Neo4j containers
+- **Python**: 3.10 or higher (for local development)
+- **Docker Desktop**: For containerized deployment or database services
 - **Ollama**: Required for local LLM inference ([Download](https://ollama.com/))
 - **GPU**: Optional but recommended (NVIDIA with CUDA support for faster embeddings)
 
-### Installation
+### Deployment Options
+
+You can run the ATS system in two ways:
+
+#### Option 1: 🐳 Docker (Recommended for Production)
+
+**Advantages**: Consistent environment, easy deployment, no dependency conflicts
+
+```powershell
+# Quick start - runs everything in containers
+.\docker-start.bat
+
+# Then initialize and ingest
+docker-compose exec app python scripts/init_db.py
+docker-compose exec app python scripts/ingest_resumes.py --dir /app/data/resumes --batch-size 5
+```
+
+**Access**:
+
+- API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+- Neo4j Browser: http://localhost:7474
+
+**Note**: Ollama runs on your host machine for optimal GPU access. See [DOCKER.md](DOCKER.md) for complete guide.
+
+#### Option 2: 💻 Local Development
+
+**Advantages**: Direct code editing, easier debugging, full control
+
+Continue with the installation section below for local setup.
+
+---
+
+## 🐳 Docker Deployment (Quick Reference)
+
+For complete Docker documentation, see **[DOCKER.md](DOCKER.md)**.
+
+### Quick Commands
+
+```powershell
+# Start all services (app, postgres, neo4j, redis)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f app
+
+# Initialize database
+docker-compose exec app python scripts/init_db.py
+
+# Ingest resumes
+docker-compose exec app python scripts/ingest_resumes.py --dir /app/data/resumes --batch-size 5
+
+# Stop services
+docker-compose stop
+
+# Remove containers (keeps data)
+docker-compose down
+```
+
+### Architecture
+
+All services run in separate containers:
+
+- **app**: FastAPI application
+- **postgres**: PostgreSQL + pgvector for vector storage
+- **neo4j**: Knowledge graph database
+- **redis**: Caching layer
+- **Ollama**: Runs on host machine (not containerized)
+
+For detailed documentation, troubleshooting, and advanced configuration, see **[DOCKER.md](DOCKER.md)**.
+
+---
+
+## 💻 Local Development Installation
 
 #### 1. Clone and Setup Environment
 

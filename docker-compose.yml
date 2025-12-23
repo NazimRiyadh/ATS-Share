@@ -1,9 +1,10 @@
 version: "3.9"
 
 services:
+  # ============== PostgreSQL with pgvector ==============
   postgres:
     image: pgvector/pgvector:pg16
-    container_name: pgvector-db
+    container_name: ats-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
@@ -11,23 +12,115 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgvector_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - ats-network
+    restart: unless-stopped
 
+  # ============== Neo4j Knowledge Graph ==============
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: ats-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/ats_neo4j_password
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*
+      NEO4J_dbms_memory_heap_initial__size: 512m
+      NEO4J_dbms_memory_heap_max__size: 2g
+    ports:
+      - "7474:7474" # HTTP
+      - "7687:7687" # Bolt
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: [ "CMD-SHELL", "cypher-shell -u neo4j -p ats_neo4j_password 'RETURN 1' || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - ats-network
+    restart: unless-stopped
+
+  # ============== Redis Cache ==============
   redis:
     image: redis:alpine
     container_name: ats-redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 3
+    networks:
+      - ats-network
+    restart: unless-stopped
 
+  # ============== FastAPI Application ==============
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ats-app
+    env_file:
+      - .env.docker
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind mounts for development - code changes reflected immediately
+      - ./api:/app/api
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      # Persistent data storage
+      - ./rag_storage:/app/rag_storage
+      - ./data:/app/data
+      # Model cache to avoid re-downloading
+      - model_cache:/home/appuser/.cache
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - ats-network
+    restart: unless-stopped
+    # Add extra hosts for Ollama on host machine
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+# ============== Networks ==============
+networks:
+  ats-network:
+    driver: bridge
+    name: ats-network
+
+# ============== Volumes ==============
 volumes:
-  pgvector_data:
+  postgres_data:
+    name: ats_postgres_data
+  neo4j_data:
+    name: ats_neo4j_data
+  neo4j_logs:
+    name: ats_neo4j_logs
+  redis_data:
+    name: ats_redis_data
+  model_cache:
+    name: ats_model_cache

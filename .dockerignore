@@ -1,0 +1,76 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Environment files
+.env
+.env.example
+.env.docker
+
+# Documentation
+*.md
+docs/
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Logs
+*.log
+logs/
+
+# Data (will be mounted as volumes)
+rag_storage/
+data/resumes/
+data/ingestion_state.json
+dataset.csv
+
+# Windows
+*.bat
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Misc
+*.json
+!requirements.txt
+chatjob_test_results.json
+context_test_result.json
+evaluation_results.json
+check_job_context.py
+simulation_demo.py
