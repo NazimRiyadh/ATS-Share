@@ -28,23 +28,26 @@ FROM base as dependencies
 # Copy only requirements first for better caching
 COPY requirements.txt .
 
-# Install Python dependencies with increased timeout
-# Split into chunks to avoid timeout on large packages
+# Install heavy dependencies FIRST as separate layer (PyTorch ~900MB)
+# This layer will be cached and won't need to re-download unless PyTorch version changes
+RUN pip install --no-cache-dir --timeout=300 \
+    torch>=2.1.0 \
+    sentence-transformers>=2.2.2
+
+# Install FastAPI and web framework
 RUN pip install --no-cache-dir --timeout=300 \
     fastapi>=0.109.0 \
     uvicorn[standard]>=0.27.0 \
     python-multipart>=0.0.6
 
+# Install database drivers
 RUN pip install --no-cache-dir --timeout=300 \
     lightrag-hku>=1.0.0 \
     asyncpg>=0.29.0 \
     neo4j>=5.15.0 \
     psycopg2-binary>=2.9.9
 
-RUN pip install --no-cache-dir --timeout=300 \
-    torch>=2.1.0 \
-    sentence-transformers>=2.2.2
-
+# Install remaining dependencies (adding new packages here won't invalidate PyTorch cache)
 RUN pip install --no-cache-dir --timeout=300 \
     pypdf>=3.17.0 \
     python-docx>=1.1.0 \
@@ -58,10 +61,11 @@ RUN pip install --no-cache-dir --timeout=300 \
     rank-bm25>=0.2.2 \
     rapidfuzz>=3.6.0 \
     pytest>=7.4.0 \
-    pytest-asyncio>=0.23.0
+    pytest-asyncio>=0.23.0 \
+    structlog>=24.1.0
 
-# Note: Embedding models will be downloaded on first run
-# This keeps the image size smaller and build time faster
+# Note: PyTorch is installed first in its own layer
+# Adding new packages to the last RUN won't force PyTorch re-download
 
 # ============== Stage 3: Application ==============
 FROM dependencies as application
