@@ -18,9 +18,15 @@ idea/
 rag_storage/
 rag_cache/
 *.log
-rag_storage/
 output/
 embeddings/
+
+# Test outputs and temporary files
+*_test_results.json
+*_result.json
+evaluation_results.json
+check_*.py
+simulation_*.py
 
 # OS
 .DS_Store

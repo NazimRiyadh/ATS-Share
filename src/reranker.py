@@ -1,38 +1,25 @@
 """
-Cross-encoder reranking model for candidate scoring.
-Uses ms-marco-MiniLM-L-6-v2 for efficient reranking.
+Lightweight reranker stub for Docker deployment.
+Uses simple BM25 scoring instead of heavy cross-encoder models.
 """
 
 import logging
 from typing import List, Tuple, Optional
 import numpy as np
-
-from sentence_transformers import CrossEncoder
+from rank_bm25 import BM25Okapi
 
 from .config import settings
-
 from src.logging_config import get_logger
 
 logger = get_logger(__name__)
 
 
 class RerankerModel:
-    """Cross-encoder reranking model."""
+    """BM25-based reranker (lightweight alternative to CrossEncoder)."""
     
     def __init__(self, model_name: str = None, device: str = None):
-        self.model_name = model_name or settings.rerank_model
-        self.device = device
-        self._model: Optional[CrossEncoder] = None
-    
-    def _ensure_model_loaded(self):
-        """Lazy load the model."""
-        if self._model is None:
-            logger.info(f"Loading reranker model: {self.model_name}")
-            self._model = CrossEncoder(
-                self.model_name,
-                device=self.device
-            )
-            logger.info(f"✅ Reranker model loaded")
+        self.model_name = "BM25 (lightweight)"
+        logger.info(f"Using lightweight BM25 reranker instead of cross-encoder")
     
     def rerank(
         self,
@@ -42,7 +29,7 @@ class RerankerModel:
         return_scores: bool = True
     ) -> List[Tuple[int, float, str]]:
         """
-        Rerank documents based on relevance to query.
+        Rerank documents using BM25 scoring.
         
         Args:
             query: The search query
@@ -53,16 +40,18 @@ class RerankerModel:
         Returns:
             List of (original_index, score, document) tuples, sorted by score descending
         """
-        self._ensure_model_loaded()
-        
         if not documents:
             return []
         
-        # Create query-document pairs
-        pairs = [[query, doc] for doc in documents]
+        # Tokenize
+        tokenized_docs = [doc.lower().split() for doc in documents]
+        tokenized_query = query.lower().split()
+        
+        # Create BM25 index
+        bm25 = BM25Okapi(tokenized_docs)
         
         # Get scores
-        scores = self._model.predict(pairs)
+        scores = bm25.get_scores(tokenized_query)
         
         # Create indexed results
         results = [(i, float(scores[i]), documents[i]) for i in range(len(documents))]
@@ -74,7 +63,7 @@ class RerankerModel:
         if top_k is not None:
             results = results[:top_k]
         
-        logger.debug(f"Reranked {len(documents)} documents, returning top {len(results)}")
+        logger.debug(f"Reranked {len(documents)} documents with BM25, returning top {len(results)}")
         return results
     
     async def arerank(
