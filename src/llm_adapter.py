@@ -34,7 +34,32 @@ class OllamaAdapter:
         self.temperature = temperature or settings.llm_temperature
         self.timeout = timeout if timeout is not None else settings.llm_timeout
         self._client: Optional[httpx.AsyncClient] = None
+        
+        # Persist initial state
+        self._persist_state()
     
+    def _persist_state(self):
+        """Save current base URL to state file for visibility."""
+        import json
+        import os
+        
+        try:
+            # Ensure data directory exists
+            os.makedirs("data", exist_ok=True)
+            
+            state = {
+                "base_url": self.base_url,
+                "updated_at": __import__("datetime").datetime.now().isoformat(),
+                "default_model": self.model,
+                "extraction_model": settings.llm_extraction_model
+            }
+            
+            with open("data/llm_state.json", "w") as f:
+                json.dump(state, f, indent=2)
+                
+        except Exception as e:
+            logger.warning(f"Failed to persist LLM state: {e}")
+
     async def _get_client(self) -> httpx.AsyncClient:
         """Get or create async HTTP client."""
         if self._client is None or self._client.is_closed:
@@ -57,6 +82,18 @@ class OllamaAdapter:
         if self._client and not self._client.is_closed:
             await self._client.aclose()
             self._client = None
+
+    async def set_base_url(self, new_url: str):
+        """
+        Update the base URL dynamically (e.g., for Colab tunnels).
+        Forces reconnection on next request.
+        """
+        if new_url != self.base_url:
+            logger.info(f"🔄 Updating Ollama base URL: {self.base_url} -> {new_url}")
+            self.base_url = new_url
+            self._persist_state() # Save new state
+            await self.close()  # Close existing client to force recreation with new URL
+
     
     @retry(
         stop=stop_after_attempt(3),

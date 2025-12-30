@@ -24,5 +24,5 @@ if %errorlevel% neq 0 (
 
 echo [INFO] Starting Uvicorn Server...
 cd api
-uvicorn main:app --reload --port 8000
+uvicorn main:app --reload --reload-dir . --reload-dir ../src --port 8000
 pause

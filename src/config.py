@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     # Neo4j Configuration (use bolt:// for standalone, neo4j:// for cluster)
     neo4j_uri: str = Field(default="bolt://127.0.0.1:7687")
     neo4j_username: str = Field(default="neo4j")
-    neo4j_password: str = Field(default="password")
+    neo4j_password: str = Field(default="ats_neo4j_password")
     
     # Ollama / LLM Configuration
     ollama_base_url: str = Field(default="http://localhost:11434")

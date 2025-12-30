@@ -12,6 +12,7 @@ from datetime import datetime
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -21,7 +22,7 @@ from src.logging_config import configure_logging, get_logger
 from src.rag_config import get_rag_manager
 from src.llm_adapter import get_ollama_adapter
 from api.middleware import setup_middleware, setup_exception_handlers
-from api.routes import ingest, analyze, chat
+from api.routes import ingest, analyze, chat, config
 from api.models import HealthResponse, StatsResponse
 
 # Configure logging
@@ -33,7 +34,7 @@ logger = get_logger(__name__)
 async def lifespan(app: FastAPI):
     """Application lifespan manager for startup/shutdown."""
     # Startup
-    logger.info("🚀 Starting LightRAG ATS API...")
+    logger.info("🚀 Starting ATS API...")
     
     try:
         # Initialize RAG system
@@ -65,7 +66,7 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI application
 app = FastAPI(
-    title="LightRAG ATS API",
+    title="ATS API",
     description="""
     Production-ready Applicant Tracking System with dual-level retrieval.
     
@@ -94,6 +95,10 @@ setup_exception_handlers(app)
 app.include_router(ingest.router)
 app.include_router(analyze.router)
 app.include_router(chat.router)
+app.include_router(config.router)
+
+
+
 
 
 # ============== Health & Status Endpoints ==============
