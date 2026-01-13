@@ -1,0 +1,64 @@
+Here is a professional resume for Susan Edwards:
+
+Susan Edwards
+Quality Assurance Engineer
+
+Contact Information:
+
+* Address: 123 Main St, Anytown, USA 12345
+* Phone: (555) 555-5555
+* Email: [susan.edwards@email.com](mailto:susan.edwards@email.com)
+* LinkedIn: linkedin.com/in/susanedwardsqa
+
+Professional Summary:
+Highly motivated and detail-oriented Quality Assurance Engineer with 5+ years of experience in automated testing, bug tracking, and performance testing. Skilled in Selenium, Java, and JIRA. Proven track record of delivering high-quality software products and improving testing efficiency. Passionate about continuous improvement and process automation.
+
+Technical Skills:
+
+* Programming languages: Java, Python
+* Testing frameworks: Selenium, TestNG
+* Bug tracking tools: JIRA, Bugzilla
+* Performance testing tools: JMeter
+* Operating Systems: Windows, Linux
+* Agile methodologies: Scrum, Kanban
+
+Experience:
+
+QA Engineer, ABC Corporation (2018-Present)
+
+* Designed and executed automated test scripts using Selenium and Java to ensure high-quality software releases
+* Collaborated with development team to identify and prioritize testing needs
+* Implemented JIRA for bug tracking and project management
+* Conducted performance testing using JMeter to identify bottlenecks and optimize system performance
+* Participated in code reviews to ensure adherence to coding standards and best practices
+
+QA Engineer, DEF Company (2015-2018)
+
+* Created and executed test plans and test cases using TestNG and Selenium
+* Worked closely with development team to identify and resolve defects
+* Trained junior QA engineers on testing best practices and tools
+* Contributed to the development of company-wide testing standards and procedures
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2010-2014)
+
+Achievements:
+
+* Improved test automation efficiency by 30% through process automation and tool optimization
+* Reduced defect density by 25% through diligent testing and collaboration with development team
+* Successfully implemented JIRA for bug tracking, resulting in 50% reduction in testing cycle time
+* Received "QA Engineer of the Year" award in 2019 for outstanding contributions to quality assurance
+
+Certifications:
+
+* Certified Associate in Software Testing (CAST), International Software Testing Qualifications Board (ISTQB)
+* Certified Java Developer (OCPJP), Oracle Corporation
+
+Professional Memberships:
+
+* Member, International Software Testing Qualifications Board (ISTQB)
+* Member, Association for Software Testing (AST)
+
+References:
+Available upon request.

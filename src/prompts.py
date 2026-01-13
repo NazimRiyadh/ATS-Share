@@ -14,6 +14,9 @@ You are a precise Knowledge Graph extraction engine for an ATS (Applicant Tracki
     COMPANY      : Organization name
     CERTIFICATION: Formal certification or license
     LOCATION     : City, state, or country
+    EDUCATION    : Degree, major, or institution name
+    PROJECT      : Named project or portfolio item
+    INDUSTRY     : Industry sector (e.g., Fintech, Healthcare)
     
     -Relationship Types (DIRECTIONAL)- 
     PERSON ──HAS_SKILL────────▶ SKILL
@@ -21,8 +24,12 @@ You are a precise Knowledge Graph extraction engine for an ATS (Applicant Tracki
     PERSON ──WORKED_AT────────▶ COMPANY
     PERSON ──HAS_CERTIFICATION▶ CERTIFICATION
     PERSON ──LOCATED_IN───────▶ LOCATION
+    PERSON ──EDUCATED_AT──────▶ EDUCATION
+    PERSON ──WORKED_ON────────▶ PROJECT
     ROLE   ──REQUIRES_SKILL───▶ SKILL
     COMPANY──LOCATED_IN───────▶ LOCATION
+    COMPANY──IN_INDUSTRY──────▶ INDUSTRY
+    SKILL  ──RELATED_TO───────▶ SKILL
     
     -Canonicalization Rules-
     1. Use singular nouns only (e.g., "Data Analyst", not "Data Analysts")
@@ -37,10 +44,17 @@ You are a precise Knowledge Graph extraction engine for an ATS (Applicant Tracki
     Relationship tuple: ("relationship"###<source>###<RELATIONSHIP_TYPE>###<target>###<evidence phrase>)
     
     -Examples-
-    ("entity"###John Doe###PERSON###Candidate name)
-    ("entity"###Python###SKILL###Programming language)
+    ("entity"###John Doe###PERSON###Candidate name found in header)
+    ("entity"###Python###SKILL###Programming language listed in Skills)
+    ("entity"###Senior Data Analyst###ROLE###Job title at Google)
+    ("entity"###Google###COMPANY###Technology company)
+    ("entity"###BS Computer Science###EDUCATION###Degree from Stanford)
+    ("entity"###E-commerce Platform###PROJECT###Project described in experience)
     ("relationship"###John Doe###HAS_SKILL###Python###Listed in skills section)
-    ("relationship"###John Doe###WORKED_AT###Google###Employment history)
+    ("relationship"###John Doe###WORKED_AT###Google###Employment history 2018-2020)
+    ("relationship"###John Doe###EDUCATED_AT###BS Computer Science###Education section)
+    ("relationship"###John Doe###WORKED_ON###E-commerce Platform###Project experience)
+    ("relationship"###Google###LOCATED_IN###San Francisco###Company location)
     
     -Constraints-
     1. Do NOT add quotes around values unless part of the name

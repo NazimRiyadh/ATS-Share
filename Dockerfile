@@ -25,46 +25,42 @@ WORKDIR /app
 # ============== Stage 2: Python Dependencies ==============
 FROM base as dependencies
 
-# Copy only requirements first for better caching
+# Copy requirements if available, although we are manual here
 COPY requirements.txt .
 
-# Install PyTorch FIRST as separate layer (for caching)
-RUN pip install --no-cache-dir --timeout=300 \
-    torch>=2.1.0 \
-    sentence-transformers>=2.2.2
-
-# Core frameworks
-RUN pip install --no-cache-dir --timeout=300 \
-    fastapi>=0.109.0 \
-    uvicorn[standard]>=0.27.0 \
-    python-multipart>=0.0.6
-
-# Database and LightRAG
-RUN pip install --no-cache-dir --timeout=300 \
-    lightrag-hku>=1.0.0 \
-    asyncpg>=0.29.0 \
-    neo4j>=5.15.0 \
-    psycopg2-binary>=2.9.9
-
-# Remaining dependencies (lightweight - no PyTorch!)
-RUN pip install --no-cache-dir --timeout=300 \
-    pypdf>=3.17.0 \
-    python-docx>=1.1.0 \
-    httpx>=0.26.0 \
-    aiohttp>=3.9.0 \
-    pydantic-settings>=2.1.0 \
-    python-dotenv>=1.0.0 \
-    tqdm>=4.66.0 \
-    tenacity>=8.2.3 \
-    google-generativeai>=0.3.2 \
-    rank-bm25>=0.2.2 \
-    rapidfuzz>=3.6.0 \
-    pytest>=7.4.0 \
-    pytest-asyncio>=0.23.0 \
-    structlog>=24.1.0 \
-    celery[redis]>=5.3.0 \
-    redis>=5.0.0 \
+# Install PyTorch and core scientific packages FIRST
+# Using a single RUN instruction for heavy packages to reduce layers
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+    torch \
+    sentence-transformers \
     numpy
+
+# Install remaining application dependencies
+RUN pip install --no-cache-dir \
+    fastapi \
+    uvicorn[standard] \
+    python-multipart \
+    lightrag-hku \
+    asyncpg \
+    neo4j \
+    psycopg2-binary \
+    pypdf \
+    python-docx \
+    httpx \
+    aiohttp \
+    pydantic-settings \
+    python-dotenv \
+    tqdm \
+    tenacity \
+    google-generativeai \
+    rank-bm25 \
+    rapidfuzz \
+    pytest \
+    pytest-asyncio \
+    structlog \
+    celery[redis] \
+    redis
 
 # ============== Stage 3: Application ==============
 FROM dependencies as application
@@ -88,7 +84,7 @@ USER appuser
 EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=30s --start-period=40s --retries=5 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Run the application

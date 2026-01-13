@@ -1,0 +1,59 @@
+Here's a sample resume for Garrett Holt:
+
+Garrett Holt
+Cloud Engineer
+
+Contact Information:
+
+* Address: 123 Main St, Anytown, USA 12345
+* Phone: (555) 555-5555
+* Email: [garrett.holt@email.com](mailto:garrett.holt@email.com)
+* LinkedIn: linkedin.com/in/garretholt
+
+Professional Summary:
+Highly motivated and experienced Cloud Engineer with a strong background in Cloud Cost Optimization, Scripting, and Cloud Architecture. Proven track record of delivering cost-effective and scalable cloud solutions for clients across various industries. Skilled in leveraging automation tools and technologies to streamline cloud operations and improve overall efficiency.
+
+Technical Skills:
+
+* Cloud Platforms: AWS, Azure, Google Cloud
+* Scripting Languages: Python, PowerShell, Bash
+* Cloud Cost Optimization Tools: Cloudability, ParkMyCloud, AWS Cost Explorer
+* Automation Tools: Ansible, Terraform, CloudFormation
+* Operating Systems: Windows, Linux
+* Databases: MySQL, PostgreSQL
+
+Professional Experience:
+
+Cloud Engineer, ABC Company (2018-Present)
+
+* Designed and implemented cloud infrastructure for multiple clients, resulting in a 30% reduction in cloud costs
+* Developed and maintained scripts for automating cloud operations, including server provisioning, deployment, and scaling
+* Collaborated with cross-functional teams to identify and implement cost-optimization strategies
+* Utilized Cloudability to analyze and optimize cloud spend, resulting in a 25% reduction in cloud costs
+* Mentored junior engineers on cloud best practices and automation tools
+
+Cloud Engineer, DEF Startup (2015-2018)
+
+* Built and managed cloud infrastructure for a high-growth startup, scaling from 100 to 1,000 users
+* Developed and implemented scalable architectures using AWS and Azure
+* Created and maintained scripts for automating cloud operations, including deployment and scaling
+* Collaborated with the DevOps team to implement continuous integration and deployment pipelines
+
+Education:
+
+* Bachelor's Degree in Computer Science, XYZ University (2010-2014)
+
+Certifications:
+
+* AWS Certified Cloud Practitioner - Cloud Architect
+* Azure Certified: Azure Developer Associate
+* CompTIA Cloud+ Certification
+
+Achievements:
+
+* Cloud Cost Optimization Award: Winner of the Cloud Cost Optimization Award at the 2020 Cloud Computing Conference
+* AWS Community Builder: Recognized as an AWS Community Builder for contributions to the AWS community
+* GitHub Star: Achieved over 1,000 stars on GitHub for open-source cloud automation projects
+
+References:
+Available upon request.

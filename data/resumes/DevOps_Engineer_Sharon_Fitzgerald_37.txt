@@ -1,0 +1,60 @@
+Here is a professional resume for Sharon Fitzgerald, applying for the role of DevOps Engineer:
+
+Sharon Fitzgerald
+DevOps Engineer
+
+Contact Information:
+
+* Email: [sharon.fitzgerald@email.com](mailto:sharon.fitzgerald@email.com)
+* Phone: (123) 456-7890
+* LinkedIn: linkedin.com/in/sharonfitzgerald
+
+Professional Summary:
+
+Highly motivated and experienced DevOps Engineer with a strong background in CI/CD, containerization, and orchestration. Proven track record of successfully designing, implementing, and deploying scalable and reliable systems on cloud platforms. Skilled in monitoring tools, automation, and collaboration. Passionate about leveraging technology to drive business growth and improvement.
+
+Technical Skills:
+
+* CI/CD: Jenkins, GitLab CI/CD, CircleCI
+* Containerization: Docker, Kubernetes
+* Orchestration: Ansible, Terraform
+* Monitoring Tools: Prometheus, Grafana, New Relic
+* Cloud Platforms: AWS, Azure, Google Cloud
+* Operating Systems: Linux, Windows
+* Programming Languages: Python, Bash, YAML
+
+Professional Experience:
+
+DevOps Engineer, ABC Company (2018-Present)
+
+* Designed and implemented a CI/CD pipeline using Jenkins and Docker, resulting in 30% reduction in deployment time
+* Successfully deployed a Kubernetes cluster on AWS, improving system scalability and reliability by 25%
+* Implemented monitoring and logging using Prometheus and Grafana, increasing system visibility by 40%
+* Collaborated with cross-functional teams to design and implement automation using Ansible, reducing manual effort by 50%
+
+Senior Systems Administrator, DEF Company (2015-2018)
+
+* Managed and maintained a large-scale Linux environment, ensuring 99.99% uptime and 95% system availability
+* Implemented a backup and disaster recovery strategy using Rsync and MySQL, reducing data loss by 80%
+* Collaborated with development team to design and implement a deployment process using Docker and Kubernetes, improving system reliability by 25%
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2010-2014)
+
+Certifications:
+
+* AWS Certified Developer - Associate, Amazon Web Services (2019)
+* Certified DevOps Engineer, Linux Foundation (2018)
+
+Achievements:
+
+* Recipient of the ABC Company's "Best DevOps Engineer" award (2020)
+* Speaker at the DEF Company's "DevOps Day" conference (2019)
+* Contributor to the open-source project "Kubernetes Ansible" (2018)
+
+References:
+
+Available upon request.
+
+This resume structure follows a clear and concise format, highlighting Sharon's technical skills, professional experience, education, and achievements. The professional summary provides a brief overview of Sharon's expertise and experience, while the technical skills section lists her relevant technical skills. The professional experience section provides specific examples of Sharon's accomplishments and achievements, and the education and certifications sections highlight her formal education and certifications.

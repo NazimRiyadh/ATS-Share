@@ -22,7 +22,7 @@ async def assess_graph():
     
     async with driver.session() as session:
         # 1. Node Statistics
-        print("\n📊 NODE STATISTICS:")
+        print("\n NODE STATISTICS:")
         result = await session.run("""
             MATCH (n)
             RETURN labels(n)[0] as label, count(n) as count
@@ -33,7 +33,7 @@ async def assess_graph():
             print(f"  {r['label']}: {r['count']}")
         
         # 2. Relationship Statistics
-        print("\n🔗 RELATIONSHIP STATISTICS:")
+        print("\n RELATIONSHIP STATISTICS:")
         result = await session.run("""
             MATCH ()-[r]->()
             RETURN type(r) as type, count(r) as count
@@ -44,7 +44,7 @@ async def assess_graph():
             print(f"  {r['type']}: {r['count']}")
         
         # 3. Sample PERSON nodes
-        print("\n👤 SAMPLE PERSON NODES (Top 5):")
+        print("\n SAMPLE PERSON NODES (Top 5):")
         result = await session.run("""
             MATCH (p:base)
             WHERE p.entity_type = 'PERSON' OR p.description CONTAINS 'Candidate'
@@ -54,7 +54,7 @@ async def assess_graph():
         records = await result.data()
         if records:
             for r in records:
-                print(f"  • {r['name']}: {r['desc'][:50] if r.get('desc') else 'N/A'}...")
+                print(f"  * {r['name']}: {r['desc'][:50] if r.get('desc') else 'N/A'}...")
         else:
             # Try alternative query
             result = await session.run("""
@@ -64,10 +64,10 @@ async def assess_graph():
             """)
             records = await result.data()
             for r in records:
-                print(f"  • {r['name']}: {r.get('desc', 'N/A')[:50] if r.get('desc') else 'N/A'}...")
+                print(f"  * {r['name']}: {r.get('desc', 'N/A')[:50] if r.get('desc') else 'N/A'}...")
         
         # 4. Sample relationships for one person
-        print("\n🔍 SAMPLE RELATIONSHIPS (First Person Found):")
+        print("\n SAMPLE RELATIONSHIPS (First Person Found):")
         result = await session.run("""
             MATCH (p:base)-[r]->(target:base)
             RETURN p.entity_id as person, type(r) as rel_type, target.entity_id as target
@@ -78,7 +78,7 @@ async def assess_graph():
             print(f"  {r['person']} --[{r['rel_type']}]--> {r['target']}")
         
         # 5. Check for specific skills
-        print("\n💡 TOP SKILLS IN GRAPH:")
+        print("\n TOP SKILLS IN GRAPH:")
         result = await session.run("""
             MATCH (s:base)
             WHERE s.entity_id IN ['Python', 'Java', 'SQL', 'AWS', 'Machine Learning', 'Docker', 'Kubernetes']
@@ -89,7 +89,7 @@ async def assess_graph():
         print(f"  Found: {skills_found if skills_found else 'No common skills found'}")
         
         # 6. Sample candidate with their skills
-        print("\n📋 FULL PROFILE (Random Candidate):")
+        print("\n FULL PROFILE (Random Candidate):")
         result = await session.run("""
             MATCH (p:base)-[r]->(t:base)
             WITH p, collect({rel: type(r), target: t.entity_id}) as rels
@@ -103,7 +103,7 @@ async def assess_graph():
             print(f"  Description: {rec.get('desc', 'N/A')}")
             print(f"  Relationships:")
             for rel in rec['rels'][:10]:
-                print(f"    • {rel['rel']} → {rel['target']}")
+                print(f"    * {rel['rel']} -> {rel['target']}")
     
     await driver.close()
     print("\n" + "="*60)

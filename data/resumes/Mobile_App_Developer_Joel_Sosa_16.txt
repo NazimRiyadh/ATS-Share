@@ -1,0 +1,61 @@
+Here's a professional resume for Joel Sosa:
+
+Joel Sosa
+Contact Information:
+
+* Email: [joelsosa@email.com](mailto:joelsosa@email.com)
+* Phone: (555) 123-4567
+* LinkedIn: linkedin.com/in/joelsosa
+* GitHub: github.com/joelsosa
+
+Professional Summary:
+Highly skilled and passionate Mobile App Developer with 5+ years of experience in designing and developing engaging mobile applications using Swift, iOS, and various mobile UI/UX frameworks. Proven track record of delivering high-quality applications that meet and exceed client expectations. Skilled in API integration, mobile testing, and agile methodology.
+
+Technical Skills:
+
+* Programming languages: Swift, Objective-C, Java
+* Mobile development frameworks: iOS, Swift UI, UIKit
+* UI/UX design: Sketch, Figma, Adobe XD
+* API integration: RESTful APIs, Web Services, JSON
+* Databases: Core Data, Realm, Firebase
+* Testing frameworks: JUnit, XCTest, Mockito
+* Agile development methodologies: Scrum, Kanban
+
+Professional Experience:
+
+Senior Mobile App Developer, ABC Company (2018-Present)
+
+* Designed and developed multiple mobile applications for iOS and Android platforms using Swift and Java
+* Collaborated with cross-functional teams to integrate APIs, services, and third-party libraries
+* Implemented mobile UI/UX designs using Sketch and Figma, ensuring engaging and user-friendly interfaces
+* Conducted unit testing, integration testing, and UI testing using XCTest and JUnit
+* Worked closely with project managers to ensure timely delivery of projects and met client expectations
+
+Mobile App Developer, DEF Startups (2015-2018)
+
+* Developed multiple mobile applications for iOS and Android platforms using Objective-C and Java
+* Integrated APIs, services, and third-party libraries to enhance application functionality
+* Designed and implemented mobile UI/UX designs using Adobe XD and Sketch
+* Conducted mobile testing using XCTest and JUnit
+* Collaborated with project managers to ensure timely delivery of projects and met client expectations
+
+Education:
+
+* Bachelor's Degree in Computer Science, XYZ University (2010-2014)
+
+Achievements:
+
+* Developed and launched a mobile application that reached #1 in the Apple App Store's Top Charts
+* Successfully integrated multiple APIs to enhance the functionality of a mobile application
+* Designed and implemented a mobile UI/UX that improved user engagement by 25%
+* Collaborated with a cross-functional team to deliver a project that met client expectations and was completed 10% under budget
+
+Certifications:
+
+* Certified iOS Developer, Apple Developer (2015)
+* Certified Mobile App Developer, Google Developers (2016)
+
+References:
+Available upon request.
+
+Note: This is just a sample resume, and you should tailor your resume to fit your specific experience and the job description you are applying for.

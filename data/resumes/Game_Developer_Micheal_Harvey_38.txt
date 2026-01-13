@@ -1,0 +1,15 @@
+Here's a sample resume for Micheal Harvey:
+
+Micheal Harvey
+Game Developer
+
+Contact Information:
+
+* Email: [micheal.harvey@email.com](mailto:micheal.harvey@email.com)
+* Phone: (555) 555-5555
+* LinkedIn: linkedin.com/in/michealharvey
+* GitHub: github.com/michealharvey
+
+Professional Summary:
+
+Highly skilled and passionate game developer with 5+ years of experience in creating immersive and engaging gaming experiences using Unity and Unreal Engine. Proficient in C

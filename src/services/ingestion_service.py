@@ -133,7 +133,8 @@ class ResumeIngestionService:
             
             # Ingest into LightRAG
             try:
-                await rag.ainsert(doc_content)
+                # Pass file_path explicitly for source tracking
+                await rag.ainsert(doc_content, file_paths=file_path)
                 logger.debug("ainsert_success", candidate=candidate_name)
             except KeyError as e:
                 if 'history_messages' in str(e):

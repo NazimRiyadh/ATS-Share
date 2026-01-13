@@ -1,0 +1,67 @@
+Here's a sample resume for Chelsea Newman:
+
+Chelsea Newman
+
+Contact Information:
+
+* Email: [chelsea.newman@email.com](mailto:chelsea.newman@email.com)
+* Phone: 555-555-5555
+* LinkedIn: linkedin.com/in/chelseanewman
+* GitHub: github.com/chelseanewman
+
+Professional Summary:
+
+Highly motivated and detail-oriented UI Engineer with a strong background in HTML, CSS, and React. Proven track record of delivering high-quality, visually appealing user interfaces that drive business results. Skilled in creating responsive, accessible, and scalable web applications that meet the needs of users and stakeholders.
+
+Technical Skills:
+
+* Programming languages: JavaScript, HTML, CSS
+* Front-end frameworks: React, React Native
+* Libraries and tools: Webpack, Babel, ESLint, Jest
+* Operating Systems: Windows, macOS, Linux
+* Agile methodologies: Scrum, Kanban
+
+Professional Experience:
+
+UI Engineer, ABC Company (2020-Present)
+
+* Designed and developed high-performing, responsive UI components using React and CSS
+* Collaborated with cross-functional teams to implement UI/UX design principles and best practices
+* Conducted code reviews and ensured adherence to company coding standards and guidelines
+* Participated in sprint planning and estimation, and contributed to the development of project roadmaps
+* Mentored junior engineers and provided guidance on UI engineering best practices
+
+Senior Web Developer, DEF Agency (2018-2020)
+
+* Led the development of multiple high-profile web applications using React and HTML/CSS
+* Designed and implemented responsive, accessible, and scalable UI components
+* Collaborated with designers to implement UI/UX design principles and best practices
+* Conducted performance optimization and debugging to improve application speed and stability
+* Participated in code reviews and ensured adherence to company coding standards and guidelines
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2015-2019)
+* Certificate in Front-end Development, Online Course (2017)
+
+Achievements:
+
+* Recipient of the ABC Company UI Engineer of the Year Award (2022) for outstanding contributions to the development of high-quality UI components
+* Contributor to the React documentation (2020) for helping to improve the React documentation and community resources
+* Mentor to junior engineers (2019-2020) for providing guidance and support to junior engineers on UI engineering best practices
+
+Projects:
+
+* Personal Project: Weather App (2020) - a mobile and web application built using React Native and React, showcasing weather data and forecasts
+* Contributor to Open-Source Project: React UI Kit (2019) - a collection of reusable React UI components and templates
+
+Certifications:
+
+* Certified Scrum Master (CSM) (2019)
+* Certified React Developer (2018)
+
+References:
+
+Available upon request.
+
+Note: This is just a sample, and you should customize your resume to fit your specific experience and the job you're applying for. Good luck with your application!

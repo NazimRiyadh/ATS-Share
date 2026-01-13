@@ -1,0 +1,63 @@
+Here's a sample resume for Jessica Hall, a candidate applying for the role of Cloud Engineer:
+
+Jessica Hall
+Cloud Engineer
+
+Contact Information:
+
+* Email: [jhall@email.com](mailto:jhall@email.com)
+* Phone: (555) 123-4567
+* LinkedIn: linkedin.com/in/jessicahall
+* GitHub: github.com/jessicahall
+
+Summary:
+Highly motivated and detail-oriented Cloud Engineer with 5+ years of experience in designing, developing, and deploying scalable and secure cloud-based applications using Serverless Architecture and Scripting. Proven track record of delivering high-quality solutions on time and on budget. Skilled in cloud migration, security, and DevOps practices.
+
+Professional Experience:
+
+Cloud Engineer, ABC Corporation (2018-Present)
+
+* Design and develop scalable and secure cloud-based applications using Serverless Architecture (AWS Lambda, Azure Functions, Google Cloud Functions)
+* Write and maintain complex scripts using Python, Bash, and PowerShell to automate cloud deployments and migrations
+* Collaborate with cross-functional teams to identify and prioritize cloud migration projects
+* Implement security best practices, including encryption, access controls, and monitoring
+* Provide technical guidance and support to development teams on cloud-related topics
+
+Senior Systems Administrator, DEF Company (2015-2018)
+
+* Migrated on-premises applications to cloud infrastructure using AWS and Azure
+* Developed and deployed cloud-based monitoring and logging solutions using Prometheus, Grafana, and ELK Stack
+* Collaborated with DevOps teams to implement continuous integration and continuous deployment (CI/CD) pipelines using Jenkins and GitLab CI/CD
+* Provided technical support and training to users on cloud-based applications and services
+
+Achievements:
+
+* Successfully migrated 10+ on-premises applications to cloud infrastructure, resulting in 30% reduction in costs and 25% increase in scalability
+* Developed and deployed a Serverless Architecture-based application using AWS Lambda, which resulted in 50% reduction in costs and 40% increase in scalability
+* Implemented a cloud-based monitoring and logging solution using Prometheus, Grafana, and ELK Stack, which resulted in 90% reduction in mean time to detect (MTTD) and 80% reduction in mean time to resolve (MTTR)
+* Collaborated with cross-functional teams to develop and deploy a cloud-based DevOps platform using Jenkins and GitLab CI/CD, which resulted in 25% reduction in deployment time and 20% increase in deployment frequency
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2015)
+
+Certifications:
+
+* AWS Certified Solutions Architect - Associate (2019)
+* AWS Certified Developer - Associate (2018)
+* Azure Certified: Azure Developer Associate (2017)
+
+Skills:
+
+* Cloud platforms: AWS, Azure, Google Cloud
+* Serverless Architecture: AWS Lambda, Azure Functions, Google Cloud Functions
+* Scripting languages: Python, Bash, PowerShell
+* DevOps tools: Jenkins, GitLab CI/CD, Docker, Kubernetes
+* Cloud security: encryption, access controls, monitoring
+* Cloud migration: cloud assessment, cloud design, cloud deployment
+
+References:
+
+Available upon request.
+
+Note that this is just a sample resume, and you should customize yours to fit your specific experience and skills. Also, be sure to proofread your resume multiple times for any grammar or formatting errors.

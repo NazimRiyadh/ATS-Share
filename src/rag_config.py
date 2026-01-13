@@ -5,6 +5,7 @@ Sets up LightRAG with PostgreSQL vector storage and Neo4j graph storage.
 
 import os
 import logging
+import json
 from typing import Optional
 
 from lightrag import LightRAG, QueryParam
@@ -113,6 +114,15 @@ class RAGManager:
             # Set up environment variables for database connections
             _setup_environment()
             
+            # CRITICAL: Define strict Entity Types for ATS Domain
+            # This aligns with the prompt in src/prompts.py
+            os.environ["ENTITY_TYPES"] = json.dumps([
+                "PERSON", "SKILL", "ROLE", "COMPANY", 
+                "CERTIFICATION", "LOCATION", "EDUCATION", 
+                "PROJECT", "INDUSTRY"
+            ])
+            logger.info("Configured ATS Entity Types")
+            
             # Initialize LightRAG with PostgreSQL (vectors) and Neo4j (graph)
             self._rag = LightRAG(
                 working_dir=settings.rag_working_dir,
@@ -220,7 +230,19 @@ class RAGManager:
                             results = results[:4]  # Truncate extra fields
                         elif len(results) < 4:
                             missing = 4 - len(results)
-                            results.extend(["Description not provided"] * missing)
+                            # results is ["entity", Name, Type, Description]
+                            # If we have 3 items: ["entity", Name, Type] -> add Desc
+                            # If we have 2 items: ["entity", Name] -> add Type, Desc
+                            if missing == 1:
+                                results.append("Description not provided")
+                            else:
+                                # Start filling from Type index (2)
+                                start_fill = 4 - missing
+                                for idx in range(start_fill, 4):
+                                    if idx == 2: # Type
+                                        results.append("UNKNOWN")
+                                    else: # Description
+                                        results.append("Description not provided")
                             
                     elif "relationship" in first_token:
                         # Expected: ("relationship", Src, Rel, Tgt, Desc) -> 5 fields
@@ -233,6 +255,10 @@ class RAGManager:
                     # =========================================================
                     # ENTITY RESOLUTION INTEGRATION
                     # =========================================================
+                    # Valid canonical entity types
+                    VALID_ENTITY_TYPES = {'PERSON', 'SKILL', 'COMPANY', 'ROLE', 'LOCATION', 
+                                         'CERTIFICATION', 'EDUCATION', 'PROJECT', 'INDUSTRY'}
+                    
                     try:
                         # Lazy import to avoid circular dependencies if any
                         from src.entity_resolver import get_entity_resolver
@@ -241,13 +267,18 @@ class RAGManager:
                         if "entity" in first_token and len(results) >= 3:
                             # Format: ("entity", Name, Type, Description)
                             entity_name = results[1]
-                            entity_type = results[2]
+                            entity_type = results[2].upper().strip()
+                            
+                            # CRITICAL: Reject entities with invalid types
+                            if entity_type not in VALID_ENTITY_TYPES:
+                                # Skip this entity entirely by returning empty
+                                return []
+                            
+                            # Update type to uppercase canonical form
+                            results[2] = entity_type
                             
                             resolved = resolver.resolve_entity(entity_name, entity_type)
                             results[1] = resolved.canonical
-                            
-                            # Optional: Update type if resolver corrected it (e.g. inferred from name)
-                            # results[2] = resolved.entity_type.value
                             
                         elif "relationship" in first_token and len(results) >= 3:
                             # Format: ("relationship", Src, RelType, Tgt, Desc)

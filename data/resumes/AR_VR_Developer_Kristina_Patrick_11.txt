@@ -1,0 +1,25 @@
+Here's a sample resume for Kristina Patrick:
+
+Kristina Patrick
+Contact Information:
+
+* Email: [kpatrick@email.com](mailto:kpatrick@email.com)
+* Phone: (555) 555-5555
+* LinkedIn: linkedin.com/in/kristinapatrick
+* Portfolio: kristinapatrick.com
+
+Summary:
+Highly skilled and innovative AR/VR developer with expertise in 3D modeling, Oculus SDK, and augmented reality markers. Proven track record of delivering high-quality, engaging experiences that push the boundaries of immersive technology. Proficient in a range of development tools and technologies, with a passion for staying up-to-date with the latest advancements in the field.
+
+Professional Experience:
+
+* Senior AR/VR Developer, XYZ Corporation (2018-Present)
+	+ Designed and developed immersive experiences for clients across various industries, including entertainment, education, and healthcare
+	+ Utilized 3D modeling software (Blender, Maya) to create high-quality 3D assets and environments
+	+ Implemented Oculus SDK for development of VR experiences, including hand tracking and spatial audio
+	+ Created augmented reality markers using Vuforia and ARKit for seamless tracking and interaction
+	+ Collaborated with cross-functional teams to ensure project deliverables met client requirements and expectations
+* AR/VR Developer, ABC Startups (2015-2018)
+	+ Developed and maintained AR/VR experiences for internal projects and client initiatives
+	+ Built and optimized 3D models using 3ds Max and Maya
+	+ Created and implemented custom scripts using C
