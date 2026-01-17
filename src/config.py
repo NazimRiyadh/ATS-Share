@@ -37,9 +37,13 @@ class Settings(BaseSettings):
     llm_timeout: float = Field(default=300.0, description="LLM request timeout in seconds (default: 5 minutes)")
     
     # Provider Selection
-    llm_provider: str = Field(default="ollama", description="LLM provider: 'ollama' or 'gemini'")
+    llm_provider: str = Field(default="ollama", description="LLM provider: 'ollama', 'gemini', or 'runpod'")
     gemini_api_key: str = Field(default="", description="Google Gemini API Key")
     gemini_model: str = Field(default="gemini-flash-latest", description="Gemini model name")
+    
+    # RunPod Serverless Configuration
+    runpod_api_key: str = Field(default="", description="RunPod API Key")
+    runpod_endpoint_id: str = Field(default="", description="RunPod Serverless Endpoint ID")
     
     # Embedding Configuration
     embedding_model: str = Field(default="BAAI/bge-m3")
@@ -66,6 +70,7 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
+        extra = "ignore"  # Allow unknown env vars (e.g., RunPod settings)
 
 
 @lru_cache()

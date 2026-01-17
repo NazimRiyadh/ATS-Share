@@ -1,6 +1,6 @@
 {
   "base_url": "http://localhost:11434",
-  "updated_at": "2026-01-13T13:09:41.683496",
+  "updated_at": "2026-01-14T02:50:28.557565",
   "default_model": "llama3.1:8b",
   "extraction_model": "llama3.1:8b"
 }

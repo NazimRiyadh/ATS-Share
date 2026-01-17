@@ -165,19 +165,19 @@ class RAGManager:
                 PROMPTS["DEFAULT_RECORD_DELIMITER"] = "\n"
                 PROMPTS["DEFAULT_COMPLETION_DELIMITER"] = "\n\n"
                 
-                # CRITICAL: Override examples to use pipe delimiter with PERSON-centric relationships
+                # CRITICAL: Override examples to use correct delimiter format for LightRAG parser
                 PROMPTS["entity_extraction_examples"] = [
-                    """("entity"###John Doe###PERSON###Candidate name)
-("entity"###Python###SKILL###Programming language)
-("entity"###Senior Data Analyst###ROLE###Job title)
-("entity"###Google###COMPANY###Technology company)
-("entity"###San Francisco###LOCATION###City in California)
-("entity"###AWS Certified###CERTIFICATION###Cloud certification)
-("relationship"###John Doe###HAS_SKILL###Python###Listed in skills section)
-("relationship"###John Doe###HAS_ROLE###Senior Data Analyst###Current position)
-("relationship"###John Doe###WORKED_AT###Google###Employment history)
-("relationship"###John Doe###LOCATED_IN###San Francisco###Resume header)
-("relationship"###John Doe###HAS_CERTIFICATION###AWS Certified###Certifications section)"""
+                    """entity###John Doe###PERSON###Candidate name
+entity###Python###SKILL###Programming language
+entity###Senior Data Analyst###ROLE###Job title
+entity###Google###COMPANY###Technology company
+entity###San Francisco###LOCATION###City in California
+entity###AWS Certified###CERTIFICATION###Cloud certification
+relationship###John Doe###HAS_SKILL###Python###Listed in skills section
+relationship###John Doe###HAS_ROLE###Senior Data Analyst###Current position
+relationship###John Doe###WORKED_AT###Google###Employment history
+relationship###John Doe###LOCATED_IN###San Francisco###Resume header
+relationship###John Doe###HAS_CERTIFICATION###AWS Certified###Certifications section"""
                 ]
                 
                 print("Applied PROMPTS monkey patch for Llama 3.1 format")

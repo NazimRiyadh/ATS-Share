@@ -318,9 +318,229 @@ class GeminiAdapter:
             raise
 
 
+def clean_extraction_output(text: str) -> str:
+    """
+    Clean LLM entity extraction output by removing commentary and keeping only valid tuples.
+    
+    LLMs sometimes add notes like "Note: I followed the format..." at the end.
+    This function strips those and keeps only valid entity/relationship lines.
+    """
+    if not text:
+        return text
+    
+    lines = text.strip().split('\n')
+    valid_lines = []
+    
+    # Reserved words that should NOT be entities
+    RESERVED_RELATIONSHIPS = {
+        "HAS_SKILL", "HAS_ROLE", "WORKED_AT", "HAS_CERTIFICATION", 
+        "LOCATED_IN", "EDUCATED_AT", "WORKED_ON", "REQUIRES_SKILL", 
+        "RELATED_TO", "IN_INDUSTRY", "UNKNOWN", "NONE"
+    }
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+            
+        current_line = None
+        
+        # Keep only lines that start with entity or relationship
+        if line.lower().startswith('entity###') or line.lower().startswith('relationship###'):
+            current_line = line
+        # Also handle variations (some LLMs add quotes or parens)
+        elif line.startswith('"entity"###') or line.startswith("'entity'###"):
+            current_line = 'entity###' + line.split('###', 1)[1]
+        elif line.startswith('"relationship"###') or line.startswith("'relationship'###"):
+            current_line = 'relationship###' + line.split('###', 1)[1]
+        elif line.startswith('("entity"###') or line.startswith("('entity'###"):
+            cleaned = line.lstrip('(').lstrip('"\'')
+            if cleaned.startswith('entity###'):
+                current_line = cleaned.rstrip(')')
+        elif line.startswith('("relationship"###') or line.startswith("('relationship'###"):
+            cleaned = line.lstrip('(').lstrip('"\'')
+            if cleaned.startswith('relationship###'):
+                current_line = cleaned.rstrip(')')
+        
+        if current_line:
+            # Smart Filter: Check for reserved keywords
+            try:
+                parts = current_line.split("###")
+                is_valid = True
+                
+                if current_line.lower().startswith("entity###") and len(parts) >= 2:
+                    name = parts[1].strip().upper()
+                    if name in RESERVED_RELATIONSHIPS or "->" in parts[1] or "─" in parts[1]:
+                        is_valid = False
+                        
+                elif current_line.lower().startswith("relationship###") and len(parts) >= 4:
+                    # relationship###src###rel###tgt
+                    src = parts[1].strip().upper()
+                    tgt = parts[3].strip().upper()
+                    
+                    # If source or target is a reserved relationship word, SKIP IT
+                    if src in RESERVED_RELATIONSHIPS or tgt in RESERVED_RELATIONSHIPS:
+                        is_valid = False
+                    
+                    # If source or target contains arrow (hallucination), SKIP IT
+                    if "->" in parts[1] or "->" in parts[3]:
+                        is_valid = False
+                
+                if is_valid:
+                    valid_lines.append(current_line)
+            except:
+                pass
+    
+    return '\n'.join(valid_lines)
+
+
+class RunPodAdapter:
+    """Async adapter for RunPod Serverless API."""
+    
+    def __init__(self):
+        self.api_key = settings.runpod_api_key
+        self.endpoint_id = settings.runpod_endpoint_id
+        self.model = settings.llm_model
+        self.timeout = settings.llm_timeout
+        
+        if not self.api_key:
+            raise ValueError("RUNPOD_API_KEY not set")
+        if not self.endpoint_id:
+            raise ValueError("RUNPOD_ENDPOINT_ID not set")
+        
+        self.base_url = f"https://api.runpod.ai/v2/{self.endpoint_id}"
+        self._client: Optional[httpx.AsyncClient] = None
+    
+    async def _get_client(self) -> httpx.AsyncClient:
+        """Get or create async HTTP client."""
+        if self._client is None or self._client.is_closed:
+            self._client = httpx.AsyncClient(
+                timeout=httpx.Timeout(connect=10.0, read=self.timeout, write=30.0, pool=10.0),
+                headers={"Authorization": f"Bearer {self.api_key}"}
+            )
+        return self._client
+    
+    async def close(self):
+        """Close the HTTP client."""
+        if self._client and not self._client.is_closed:
+            await self._client.aclose()
+            self._client = None
+    
+    async def generate(self, prompt: str, system_prompt: Optional[str] = None, **kwargs) -> str:
+        """Generate text using RunPod Serverless API (SvenBrnn template format)."""
+        client = await self._get_client()
+        
+        # Build messages array (compatible with SvenBrnn's runpod-worker-ollama)
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+        
+        # Prepare input for RunPod handler (SvenBrnn format)
+        # CRITICAL: Include model name to use the correct model!
+        payload = {
+            "input": {
+                "model": self.model,  # Use configured model (e.g., llama3.1:8b)
+                "messages": messages,
+                "stream": False,
+                "options": {
+                    "temperature": kwargs.get("temperature", settings.llm_temperature),
+                    "num_predict": kwargs.get("max_tokens", settings.llm_max_tokens)
+                }
+            }
+        }
+        
+        try:
+            # Submit job to RunPod
+            logger.info(f"🚀 Submitting job to RunPod endpoint: {self.endpoint_id}")
+            response = await client.post(f"{self.base_url}/run", json=payload)
+            response.raise_for_status()
+            job_data = response.json()
+            job_id = job_data.get("id")
+            
+            if not job_id:
+                raise RuntimeError(f"RunPod did not return job ID: {job_data}")
+            
+            # Poll for completion
+            logger.info(f"⏳ Waiting for RunPod job: {job_id}")
+            max_polls = int(self.timeout / 2)  # Poll every 2 seconds
+            
+            for _ in range(max_polls):
+                await asyncio.sleep(2)
+                
+                status_response = await client.get(f"{self.base_url}/status/{job_id}")
+                status_data = status_response.json()
+                status = status_data.get("status")
+                
+                if status == "COMPLETED":
+                    output = status_data.get("output", {})
+                    if isinstance(output, dict) and "error" in output:
+                        raise RuntimeError(f"RunPod error: {output['error']}")
+                    logger.info(f"✅ RunPod job completed: {job_id}")
+                    
+                    # Debug: Log raw output type and structure
+                    logger.debug(f"Raw output type: {type(output)}")
+                    logger.debug(f"Raw output: {str(output)[:500]}")
+                    
+                    if isinstance(output, str):
+                        return output
+                    elif isinstance(output, dict):
+                        # OpenAI format: {'choices': [{'message': {'content': '...'}}]}
+                        if "choices" in output and output["choices"]:
+                            choice = output["choices"][0]
+                            if isinstance(choice, dict):
+                                message = choice.get("message", {})
+                                if isinstance(message, dict) and "content" in message:
+                                    logger.debug(f"Extracted content from OpenAI format")
+                                    return message["content"]
+                        # Fallback formats
+                        return output.get("message", {}).get("content", "") or \
+                               output.get("response", "") or \
+                               output.get("content", "") or \
+                               output.get("output", "") or \
+                               str(output)
+                    elif isinstance(output, list):
+                        # Aggregated responses (return_aggregate_stream=True)
+                        parts = []
+                        for chunk in output:
+                            if isinstance(chunk, dict) and "choices" in chunk:
+                                for choice in chunk.get("choices", []):
+                                    # Non-streaming format: 'message' with 'content'
+                                    message = choice.get("message", {})
+                                    if isinstance(message, dict) and "content" in message:
+                                        parts.append(message["content"])
+                                    # Streaming format: 'delta' with 'content'
+                                    delta = choice.get("delta", {})
+                                    if isinstance(delta, dict) and "content" in delta:
+                                        parts.append(delta["content"])
+                            elif isinstance(chunk, str):
+                                parts.append(chunk)
+                        result = "".join(parts)
+                        logger.debug(f"Extracted from list: {len(result)} chars")
+                        return result
+                    else:
+                        return str(output)
+                
+                elif status == "FAILED":
+                    error = status_data.get("error", "Unknown error")
+                    raise RuntimeError(f"RunPod job failed: {error}")
+                
+                elif status in ["IN_QUEUE", "IN_PROGRESS"]:
+                    continue
+                else:
+                    logger.warning(f"Unknown RunPod status: {status}")
+            
+            raise TimeoutError(f"RunPod job timed out after {self.timeout}s")
+            
+        except httpx.HTTPError as e:
+            logger.error(f"RunPod API error: {e}")
+            raise
+
+
 # Global adapters
 _ollama_adapter: Optional[OllamaAdapter] = None
 _gemini_adapter: Optional[GeminiAdapter] = None
+_runpod_adapter: Optional[RunPodAdapter] = None
 
 
 def get_ollama_adapter() -> OllamaAdapter:
@@ -336,6 +556,13 @@ def get_gemini_adapter() -> GeminiAdapter:
     if _gemini_adapter is None:
         _gemini_adapter = GeminiAdapter()
     return _gemini_adapter
+
+def get_runpod_adapter() -> RunPodAdapter:
+    """Get or create global RunPod adapter."""
+    global _runpod_adapter
+    if _runpod_adapter is None:
+        _runpod_adapter = RunPodAdapter()
+    return _runpod_adapter
 
 
 async def ollama_llm_func(
@@ -361,6 +588,18 @@ async def ollama_llm_func(
     if provider == "gemini":
         adapter = get_gemini_adapter()
         return await adapter.generate(prompt, system_prompt, **kwargs)
+    elif provider == "runpod":
+        logger.info(f"🚀 Using RunPod provider for LLM request")
+        adapter = get_runpod_adapter()
+        result = await adapter.generate(prompt, system_prompt, **kwargs)
+        
+        # Post-process: Clean entity extraction output (strip LLM commentary)
+        # Only apply if this looks like an entity extraction prompt
+        if "entity###" in prompt.lower() or "relationship###" in prompt.lower():
+            result = clean_extraction_output(result)
+            logger.debug(f"Cleaned extraction output: {len(result)} chars")
+        
+        return result
     else:
         # Default to Ollama
         adapter = get_ollama_adapter()

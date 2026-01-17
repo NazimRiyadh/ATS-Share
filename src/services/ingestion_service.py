@@ -59,6 +59,24 @@ class ResumeIngestionService:
             except Exception as e:
                 logger.warning("failed_load_state", error=str(e))
         return {}
+    
+    def _check_schema_version(self):
+        """Check if schema version changed and reset state if needed."""
+        stored_version = self._state.get("_schema_version", "1.0.0")
+        if stored_version != self.SCHEMA_VERSION:
+            logger.warning(
+                "schema_version_changed",
+                old_version=stored_version,
+                new_version=self.SCHEMA_VERSION,
+                action="resetting_state"
+            )
+            # Clear all file tracking, keep only new version marker
+            self._state = {"_schema_version": self.SCHEMA_VERSION}
+            self._save_state()
+        elif "_schema_version" not in self._state:
+            # First time - add version marker
+            self._state["_schema_version"] = self.SCHEMA_VERSION
+            self._save_state()
         
     def _save_state(self):
         """Save ingestion state to file."""
