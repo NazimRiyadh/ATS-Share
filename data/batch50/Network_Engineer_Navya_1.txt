@@ -1,0 +1,46 @@
+Here's a professional resume for Navya:
+
+**Navya**
+**Network Engineer**
+
+**Contact Information:**
+
+* Email: [navya@email.com](mailto:navya@email.com)
+* Phone: 555-555-5555
+* LinkedIn: linkedin.com/in/navya
+
+**Objective:**
+To obtain a challenging Network Engineer position that utilizes my technical expertise to design, implement, and maintain secure and efficient network infrastructure.
+
+**Summary:**
+Highly motivated and detail-oriented Network Engineer with 3 years of experience in designing, deploying, and managing network infrastructure. Proven expertise in firewall configuration, VPN setup, and network troubleshooting. Skilled in analyzing complex network issues and implementing effective solutions.
+
+**Technical Skills:**
+
+* Firewall configuration: Cisco, Juniper, and Fortinet
+* VPN setup: OpenVPN, Cisco VPN, and IPsec
+* Network troubleshooting: Wireshark, tcpdump, and network protocol analysis
+* Network operating systems: Cisco IOS, Juniper JUNOS, and Linux
+
+**Experience:**
+Network Engineer
+**XYZ Corporation** (2020-Present)
+
+* Design, implement, and manage network infrastructure for large-scale organizations
+* Configure and troubleshoot firewalls, VPNs, and network devices
+* Conduct network performance monitoring and analyze issues to implement effective solutions
+* Collaborate with cross-functional teams to ensure network infrastructure meets business needs
+
+**Education:**
+
+* Bachelor's Degree in Computer Science, [University Name] (2018-2022)
+
+**Certifications:**
+
+* CompTIA Network+ (2020)
+* Cisco Certified Network Associate (CCNA) (2021)
+
+**References:**
+Available upon request.
+
+I hope this meets your requirements! Let me know if you need any modifications.

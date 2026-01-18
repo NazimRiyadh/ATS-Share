@@ -1,0 +1,47 @@
+Here's a professional resume for Rajesh:
+
+**Rajesh**
+**AI Engineer**
+
+**Contact Information:**
+
+* Email: [rajesh@email.com](mailto:rajesh@email.com)
+* Phone: (123) 456-7890
+* LinkedIn: linkedin.com/in/rajeshaiengineer
+
+**Objective:**
+To leverage my expertise in AI engineering to drive innovation and excellence in the development of intelligent systems, driving business growth and success.
+
+**Experience Summary:**
+
+Highly motivated and experienced AI Engineer with 6 years of experience in designing, developing, and deploying AI-powered solutions using cutting-edge technologies. Proven track record of delivering high-quality projects on time, with expertise in Python, TensorFlow, and neural networks.
+
+**Technical Experience:**
+
+* **Senior AI Engineer, ABC Corporation (2018-Present)**
+	+ Designed and developed AI-powered chatbots using TensorFlow and Python, resulting in a 25% increase in customer engagement
+	+ Developed and deployed neural network models for image classification, achieving an accuracy of 95%
+	+ Collaborated with cross-functional teams to integrate AI solutions into existing products, improving overall product experience
+* **AI Engineer, DEF Startups (2015-2018)**
+	+ Developed and deployed AI-powered recommendation systems using Python and TensorFlow, resulting in a 30% increase in sales
+	+ Designed and implemented neural network models for natural language processing, achieving an accuracy of 90%
+	+ Worked with stakeholders to understand business requirements and developed AI solutions to meet those needs
+
+**Core Skills:**
+
+* **Programming Languages:** Python, TensorFlow
+* **Neural Networks:** Design, implementation, and optimization
+* **Machine Learning:** Supervised and unsupervised learning, deep learning
+* **Data Analysis:** Data preprocessing, feature engineering, data visualization
+* **Collaboration Tools:** Git, Jupyter Notebook, TensorFlow boards
+
+**Education:**
+
+* **Bachelor's Degree in Computer Science, XYZ University (2015)**
+
+**Certifications:**
+
+* **Certified AI Engineer, AI Engineering Institute (2018)**
+
+**References:**
+Available upon request.

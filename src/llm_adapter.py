@@ -158,7 +158,7 @@ class OllamaAdapter:
             payload["options"] = {
                 "temperature": 0.0,      # Absolute determinism
                 "num_predict": 2048,     # Reduced window for extraction
-                "top_p": 0.1,            # Restrict vocabulary
+                "top_p": 0.5,            # Restrict vocabulary
                 "stop": ["\n\n\n", "User:", "Observation:", "Text:"]
             }
         else:
@@ -318,9 +318,164 @@ class GeminiAdapter:
             raise
 
 
+
+def clean_extraction_output(text: str) -> str:
+    """
+    Clean LLM entity extraction output by removing commentary and keeping only valid tuples.
+    Filters out reserved relationship keywords from being entities.
+    """
+    if not text:
+        return text
+    
+    lines = text.strip().split('\n')
+    valid_lines = []
+    
+    # Reserved words that should NOT be entities
+    RESERVED_RELATIONSHIPS = {
+        "HAS_SKILL", "HAS_ROLE", "WORKED_AT", "HAS_CERTIFICATION", 
+        "LOCATED_IN", "EDUCATED_AT", "WORKED_ON", "REQUIRES_SKILL", 
+        "RELATED_TO", "IN_INDUSTRY", "UNKNOWN", "NONE", "DESCRIPTION NOT PROVIDED"
+    }
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+            
+        current_line = None
+        
+        # Keep only lines that start with entity or relationship
+        if line.lower().startswith('entity###') or line.lower().startswith('relationship###'):
+            current_line = line
+        # Also handle variations (some LLMs add quotes or parens)
+        elif line.startswith('"entity"###') or line.startswith("'entity'###"):
+            current_line = 'entity###' + line.split('###', 1)[1]
+        elif line.startswith('"relationship"###') or line.startswith("'relationship'###"):
+            current_line = 'relationship###' + line.split('###', 1)[1]
+        elif line.startswith('("entity"###'):
+            current_line = 'entity###' + line.split('###', 1)[1]
+            current_line = current_line.rstrip(')')
+        elif line.startswith("('entity'###"):
+            current_line = 'entity###' + line.split('###', 1)[1]
+            current_line = current_line.rstrip(')')
+        elif line.startswith('("relationship"###'):
+            current_line = 'relationship###' + line.split('###', 1)[1]
+            current_line = current_line.rstrip(')')
+        elif line.startswith("('relationship'###"):
+            current_line = 'relationship###' + line.split('###', 1)[1]
+            current_line = current_line.rstrip(')')
+        
+        if current_line:
+            # Smart Filter: Check for reserved keywords and field counts
+            try:
+                parts = current_line.split("###")
+                is_valid = True
+                
+                # Check Field Counts
+                if current_line.lower().startswith("entity###"):
+                    if len(parts) < 2:
+                        is_valid = False
+                    else:
+                        name = parts[1].strip().upper()
+                        if name in RESERVED_RELATIONSHIPS or "->" in parts[1] or "─" in parts[1]:
+                            is_valid = False
+                        # Filter explicit "Description Not Provided" lines if they end up as entities
+                        if "DESCRIPTION NOT PROVIDED" in name:
+                            is_valid = False
+                        
+                elif current_line.lower().startswith("relationship###"):
+                    if len(parts) < 4:
+                        is_valid = False
+                    else:
+                        # relationship###src###rel###tgt
+                        src = parts[1].strip().upper()
+                        tgt = parts[2].strip().upper()
+                        
+                        # If source or target is a reserved relationship word, SKIP IT
+                        if src in RESERVED_RELATIONSHIPS or tgt in RESERVED_RELATIONSHIPS:
+                            is_valid = False
+                        
+                        # If source or target contains arrow (hallucination), SKIP IT
+                        if "->" in parts[1] or "->" in parts[3]:
+                            is_valid = False
+                
+                if is_valid:
+                    valid_lines.append(current_line)
+            except:
+                pass
+    
+    return '\n'.join(valid_lines)
+
+
 # Global adapters
 _ollama_adapter: Optional[OllamaAdapter] = None
 _gemini_adapter: Optional[GeminiAdapter] = None
+_openai_adapter: Optional['OpenAIAdapter'] = None
+
+
+class OpenAIAdapter:
+    """Async adapter for OpenAI API."""
+    
+    def __init__(self):
+        self.api_key = settings.openai_api_key
+        self.model = settings.openai_model
+        # Use simpler generic base URL if needed, or hardcode OpenAI
+        self.base_url = "https://api.openai.com/v1"
+        
+        if not self.api_key:
+             # Configure log to warn but don't crash until used? 
+             # Better to fail fast if module initialized? 
+             # Actually, simpler to check at access time or just raise here.
+             pass 
+
+    async def generate(self, prompt: str, system_prompt: Optional[str] = None, **kwargs) -> str:
+        """Generate text using OpenAI API."""
+        if not self.api_key:
+            raise ValueError("OPENAI_API_KEY not set in configuration")
+
+        async with httpx.AsyncClient(timeout=settings.llm_timeout) as client:
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+            messages.append({"role": "user", "content": prompt})
+            
+            payload = {
+                "model": self.model,
+                "messages": messages,
+                "temperature": kwargs.get("temperature", settings.llm_temperature),
+                "max_tokens": kwargs.get("max_tokens", settings.llm_max_tokens),
+            }
+            
+            try:
+                response = await client.post(
+                    f"{self.base_url}/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {self.api_key}",
+                        "Content-Type": "application/json"
+                    },
+                    json=payload
+                )
+                response.raise_for_status()
+                data = response.json()
+                content = data["choices"][0]["message"]["content"]
+                
+                # DEBUG: Print raw output
+                print(f"\n{'='*50}")
+                print("DEBUG: RAW OPENAI OUTPUT")
+                print(f"{'='*50}")
+                print(content)
+                print(f"{'='*50}\n")
+                
+                # Apply cleaning for entity extraction
+                if "entity" in prompt.lower() or "extract" in prompt.lower():
+                     cleaned = clean_extraction_output(content)
+                     print(f"DEBUG: CLEANED OUTPUT:\n{cleaned}\n{'='*50}")
+                     return cleaned
+                
+                return content
+            except Exception as e:
+                logger.error(f"OpenAI API error: {e}")
+                raise
 
 
 def get_ollama_adapter() -> OllamaAdapter:
@@ -337,6 +492,12 @@ def get_gemini_adapter() -> GeminiAdapter:
         _gemini_adapter = GeminiAdapter()
     return _gemini_adapter
 
+def get_openai_adapter() -> OpenAIAdapter:
+    global _openai_adapter
+    if _openai_adapter is None:
+        _openai_adapter = OpenAIAdapter()
+    return _openai_adapter
+
 
 async def ollama_llm_func(
     prompt: str,
@@ -346,20 +507,14 @@ async def ollama_llm_func(
 ) -> str:
     """
     LightRAG-compatible LLM function (Universal Dispatcher).
-    
-    Args:
-        prompt: The user prompt
-        system_prompt: Optional system prompt
-        history_messages: Optional conversation history
-        **kwargs: Additional parameters
-        
-    Returns:
-        Generated text response
     """
     provider = settings.llm_provider.lower()
     
     if provider == "gemini":
         adapter = get_gemini_adapter()
+        return await adapter.generate(prompt, system_prompt, **kwargs)
+    elif provider == "openai":
+        adapter = get_openai_adapter()
         return await adapter.generate(prompt, system_prompt, **kwargs)
     else:
         # Default to Ollama

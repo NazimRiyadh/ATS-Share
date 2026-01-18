@@ -1,0 +1,61 @@
+Here is a professional resume for Rachel Oneill, a DevOps Engineer candidate:
+
+Rachel Oneill
+DevOps Engineer
+
+Contact Information:
+
+* Email: [rachel.oneill@email.com](mailto:rachel.oneill@email.com)
+* Phone: (123) 456-7890
+* LinkedIn: linkedin.com/in/racheloneill
+* GitHub: github.com/roneill
+
+Professional Summary:
+Highly motivated and experienced DevOps Engineer with a strong background in CI/CD, Kubernetes, Ansible, and Infrastructure as Code. Proven track record of improving application delivery and deployment processes, ensuring high-quality software releases, and optimizing system performance. Skilled in cloud platforms, including AWS and Azure, with a passion for automating infrastructure and reducing manual errors.
+
+Technical Skills:
+
+* CI/CD Tools: Jenkins, GitLab CI, CircleCI
+* Containerization: Docker, Kubernetes (k8s)
+* Infrastructure as Code: Terraform, Ansible
+* Cloud Platforms: AWS, Azure
+* Scripting Languages: Python, Bash
+* Operating Systems: Linux (Ubuntu, CentOS), Windows
+
+Professional Experience:
+
+DevOps Engineer, ABC Corporation (2018-Present)
+
+* Designed and implemented CI/CD pipelines using Jenkins and GitLab CI, resulting in 30% reduction in deployment time and 25% increase in quality
+* Developed and maintained Kubernetes clusters on AWS and Azure, ensuring high availability and scalability
+* Created and managed Ansible playbooks for infrastructure provisioning and configuration
+* Collaborated with development teams to optimize application performance and reduce errors
+* Provided 24/7 on-call support for production systems
+
+Senior Systems Administrator, DEF Company (2015-2018)
+
+* Managed and maintained large-scale Linux environments, ensuring high uptime and performance
+* Developed and implemented automated scripts using Python and Bash for system monitoring and troubleshooting
+* Implemented Infrastructure as Code using Terraform and Ansible for rapid provisioning and deployment
+* Collaborated with development teams to improve application delivery and deployment processes
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2010-2014)
+
+Certifications:
+
+* Certified Jenkins Engineer (CJE)
+* Certified Kubernetes Administrator (CKA)
+* Certified Ansible Administrator (CAA)
+
+Achievements:
+
+* DevOps Engineer of the Year, ABC Corporation (2020)
+* Best Practice in CI/CD, DEF Company (2017)
+* Most Valuable Player, XYZ University Hackathon (2013)
+
+References:
+Available upon request.
+
+This structure is typical of a professional resume, with a clear and concise format that highlights the candidate's skills, experience, and achievements. The summary and skills section provide an overview of the candidate's qualifications, while the professional experience section provides specific examples of the candidate's accomplishments. The education and certifications section provide additional context for the candidate's background, and the achievements section highlights any notable awards or recognition.

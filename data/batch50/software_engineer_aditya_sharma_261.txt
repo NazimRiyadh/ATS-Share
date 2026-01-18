@@ -1,0 +1,55 @@
+aditya sharma
+contact information:
+
+* email: [adityasharma@email.com](mailto:adityasharma@email.com)
+* phone: 123-456-7890
+* linkedin: linkedin.com/in/adityasharma
+
+summary:
+highly motivated and detail-oriented software engineer with 4+ years of experience in designing, developing, and deploying scalable and efficient software systems. proficient in a range of programming languages, including java, python, and javascript. skilled in system design, algorithms, data structures, and microservices architecture.
+
+technical skills:
+
+* programming languages: java, python, javascript
+* system design: microservices, rest apis, ci/cd, git
+* data structures and algorithms: arrays, linked lists, stacks, queues, trees, graphs
+* development tools: intellij idea, eclipse, visual studio code
+* agile methodologies: scrum, kanban
+
+professional experience:
+
+software engineer, abc company (2020-present)
+
+* designed and developed multiple scalable microservices using java, python, and javascript
+* implemented rest apis using spring boot, django, and node.js
+* collaborated with cross-functional teams to design and deploy ci/cd pipelines using jenkins, docker, and kubernetes
+* utilized git for version control and collaborated with team members to resolve merge conflicts
+* participated in code reviews and ensured adherence to coding standards and best practices
+* implemented automated testing using junit, pyunit, and jest
+
+software development engineer, def startups (2018-2020)
+
+* developed multiple web applications using java, python, and javascript
+* designed and implemented data structures and algorithms for efficient data processing
+* participated in code reviews and ensured adherence to coding standards and best practices
+* collaborated with the qa team to identify and resolve defects
+* implemented automated testing using junit, pyunit, and jest
+
+education:
+
+* bachelor of technology in computer science, xyz university (2015-2019)
+	+ coursework: data structures, algorithms, computer systems, web development, database systems
+
+achievements:
+
+* developed a real-time chat application using node.js, express.js, and socket.io, which was deployed on a cloud platform
+* created a machine learning model using python and scikit-learn to predict stock prices, which achieved an accuracy of 85%
+* participated in multiple hackathons and won first prize in the "best use of ai" category
+
+certifications:
+
+* certified scrum master, scrum alliance (2020)
+* certified java developer, oracle corporation (2019)
+
+references:
+available upon request.

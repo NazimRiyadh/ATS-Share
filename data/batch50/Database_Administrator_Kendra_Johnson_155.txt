@@ -1,0 +1,54 @@
+Kendra Johnson
+Contact Information:
+
+* Address: 123 Main St, Anytown, USA 12345
+* Phone: (555) 555-5555
+* Email: [kendra.johnson@email.com](mailto:kendra.johnson@email.com)
+* LinkedIn: linkedin.com/in/kendrajohnsondba
+
+Professional Summary:
+Highly skilled and experienced Database Administrator with a strong background in backup and recovery, database security, and performance tuning. Proven track record of ensuring high availability, security, and performance of large-scale databases. Proficient in a variety of database management systems and technologies, with excellent problem-solving skills and a passion for staying up-to-date with industry trends.
+
+Technical Skills:
+
+* Database Management Systems: Oracle, Microsoft SQL Server, MySQL
+* Backup and Recovery: RMAN, SQL Server Backup, MySQL Backup
+* Database Security: Oracle TDE, SQL Server Encryption, MySQL Access Control
+* Performance Tuning: Indexing, Query Optimization, Statistics
+* Operating Systems: Windows, Linux, Unix
+* Cloud Platforms: Amazon Web Services (AWS), Microsoft Azure
+
+Professional Experience:
+
+Database Administrator, XYZ Corporation (2018-Present)
+
+* Designed and implemented a comprehensive backup and recovery strategy for multiple databases, resulting in a 99.99% uptime rate and a 50% reduction in downtime costs
+* Developed and maintained database security policies and procedures, including encryption, access control, and auditing
+* Performed regular performance tuning and optimization tasks, resulting in a 20% increase in query performance and a 15% reduction in CPU utilization
+* Collaborated with development teams to design and implement database solutions, including schema design and data modeling
+
+Database Coordinator, ABC University (2015-2018)
+
+* Assisted in the design and implementation of a university-wide database system, including database schema design and data modeling
+* Developed and maintained database security policies and procedures, including access control and auditing
+* Performed regular backup and recovery tasks, ensuring high availability and data integrity
+* Provided technical support and training to faculty and staff on database-related issues
+
+Education:
+
+* Bachelor's Degree in Computer Science, Anytown University (2015)
+
+Certifications:
+
+* Oracle Certified Professional (OCP) in Oracle Database Administration
+* Microsoft Certified Database Administrator (MCDA) in Microsoft SQL Server
+* CompTIA Security+ certification
+
+Achievements:
+
+* Winner of the 2020 XYZ Corporation IT Award for Excellence in Database Administration
+* Featured speaker at the 2019 Anytown University IT Conference on Database Security and Performance Tuning
+* Published article on database security best practices in the 2018 issue of the Anytown IT Journal
+
+References:
+Available upon request.

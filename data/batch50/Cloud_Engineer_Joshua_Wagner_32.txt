@@ -1,0 +1,60 @@
+Here is a professional resume for Joshua Wagner:
+
+Joshua Wagner
+Cloud Engineer
+
+Contact Information:
+
+* Phone: (555) 123-4567
+* Email: [joshua.wagner@email.com](mailto:joshua.wagner@email.com)
+* LinkedIn: linkedin.com/in/joshuawagner
+
+Summary:
+Highly motivated and detail-oriented Cloud Engineer with expertise in Serverless Architecture and Scripting. Proven track record of designing and implementing scalable, secure, and efficient cloud solutions. Skilled in cloud migration, containerization, and automation. Passionate about staying up-to-date with the latest cloud technologies and best practices.
+
+Technical Skills:
+
+* Programming languages: Python, Node.js, Java
+* Cloud platforms: AWS (Lambda, S3, CloudFormation), Azure (Functions, Storage, DevOps)
+* Serverless Architecture: AWS Lambda, Azure Functions
+* Scripting: Bash, PowerShell, Python
+* Containerization: Docker, Kubernetes
+* Automation: Ansible, Terraform, AWS CloudFormation
+* Operating Systems: Windows, Linux, macOS
+
+Professional Experience:
+
+Cloud Engineer, ABC Corporation (2020-Present)
+
+* Designed and implemented a serverless architecture for a high-traffic e-commerce platform, resulting in a 30% reduction in costs and a 25% increase in performance.
+* Migrated a legacy application to a cloud-based infrastructure, leveraging AWS CloudFormation and Terraform for automation and version control.
+* Collaborated with cross-functional teams to develop and deploy containerized applications using Docker and Kubernetes.
+* Developed and maintained a suite of automation scripts using PowerShell and Python to streamline cloud deployments and monitoring.
+
+Senior Cloud Engineer, DEF Startups (2018-2020)
+
+* Led a team of cloud engineers in designing and implementing a cloud-based platform for a startup, utilizing AWS Lambda and S3.
+* Created and maintained a cloud security framework, ensuring compliance with industry standards and regulations.
+* Developed and deployed a containerized web application using Docker and Kubernetes, resulting in a 50% improvement in scalability.
+* Collaborated with the development team to implement a continuous integration and continuous deployment (CI/CD) pipeline using Jenkins and Ansible.
+
+Education:
+
+* Bachelor of Science in Computer Science, XYZ University (2015-2018)
+
+Certifications:
+
+* AWS Certified Cloud Practitioner - Essentials
+* AWS Certified Developer - Associate
+* Azure Certified: Azure Developer Associate
+
+Achievements:
+
+* Winner of the AWS Hackathon 2020, designing a serverless architecture for a real-time analytics platform.
+* Published a blog post on "Serverless Architecture Best Practices" on the AWS Developer Blog.
+* Presented a talk on "Cloud Automation with Ansible and Terraform" at the Cloud Computing Conference 2019.
+
+References:
+Available upon request.
+
+This resume structure is clear and easy to follow, with a professional summary, technical skills, professional experience, education, certifications, and achievements. The bullet points under each section provide specific examples of Joshua's skills and experience, while the summary and achievements sections provide a broader overview of his qualifications and accomplishments.

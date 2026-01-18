@@ -1,0 +1,62 @@
+harshitha chopra
+contact information:
+
+* email: [harshitha.chopra@email.com](mailto:harshitha.chopra@email.com)
+* phone: 555-555-5555
+* linkedin: linkedin.com/in/harshithachopra
+
+objective:
+to obtain a challenging role as a data engineer where i can utilize my skills to design, develop, and maintain large-scale data processing systems, ensuring high-quality data insights for business decision-making.
+
+summary:
+highly motivated and detail-oriented data engineer with expertise in designing and implementing scalable data pipelines using python, sql, etl, airflow, spark, and aws. proficient in data modeling, data warehousing, and containerization using docker and kubernetes.
+
+technical skills:
+
+* programming languages: python
+* databases: sql, nosql
+* etl tools: apache beam, aws glue
+* data processing: spark, airflow, apache flink
+* data warehousing: amazon redshift, google bigquery
+* cloud platforms: aws, google cloud
+* containerization: docker, kubernetes
+* agile methodologies: scrum, kanban
+
+professional experience:
+
+data engineer, abc company (2020-present)
+
+* design and develop large-scale data processing systems using python, sql, etl, airflow, and spark
+* collaborate with cross-functional teams to integrate data from various sources, including apis, databases, and files
+* develop and maintain data pipelines using apache beam and aws glue
+* ensure data quality, integrity, and governance using data modeling and data warehousing techniques
+* deploy and monitor data processing systems using docker and kubernetes on aws
+
+data analyst, def company (2018-2020)
+
+* analyzed and interpreted large datasets to identify trends and insights using python, sql, and data visualization tools
+* developed data models and created data visualizations to communicate insights to stakeholders
+* collaborated with business teams to identify data requirements and develop data-driven solutions
+* ensured data quality and integrity by developing and maintaining data validation scripts
+
+education:
+
+* master of science in computer science, xyz university (2018)
+	+ coursework: data science, machine learning, database systems, and software engineering
+	+ thesis: "designing and implementing a scalable data processing system using apache spark and apache airflow"
+* bachelor of technology in computer science, abc university (2016)
+	+ coursework: data structures, algorithms, computer systems, and database management systems
+
+achievements:
+
+* winner of the "abc hackathon 2020" for developing a data-driven solution using python, sql, and data visualization tools
+* published a research paper on "designing and implementing a scalable data processing system using apache spark and apache airflow" in the international journal of data science and analytics (2020)
+* completed a certification program in data engineering using aws (2020)
+
+certifications:
+
+* certified data engineer, aws (2020)
+* certified data scientist, google cloud (2019)
+
+references:
+available upon request.

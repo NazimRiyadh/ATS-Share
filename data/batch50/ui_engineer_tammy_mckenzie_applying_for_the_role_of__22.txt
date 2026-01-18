@@ -1,0 +1,55 @@
+here's a sample resume for tammy mckenzie applying for the role of ui engineer:
+
+tammy mckenzie
+contact information:
+
+* email: [tammy.mckenzie@email.com](mailto:tammy.mckenzie@email.com)
+* phone: 555-555-5555
+* linkedin: linkedin.com/in/tammymckenzie
+* github: github.com/tammymckenzie
+
+summary:
+highly motivated and detail-oriented ui engineer with 5+ years of experience in designing and developing visually stunning and user-friendly interfaces. skilled in html, css, javascript, and react, with a strong understanding of ui/ux design principles. proficient in creating scalable and maintainable front-end code that meets business requirements and user expectations.
+
+technical skills:
+
+* programming languages: html, css, javascript, react
+* ui/ux design tools: sketch, figma, adobe xd
+* front-end frameworks: react, webpack, babel
+* version control: git, github
+* operating systems: windows, macos
+* agile methodologies: scrum, kanban
+
+professional experience:
+
+ui engineer, xyz corporation (2018-present)
+
+* designed and developed the front-end of multiple high-traffic websites and web applications using react and javascript
+* collaborated with cross-functional teams to implement ui/ux design changes and improve user experience
+* created reusable and modular code components using react and webpack
+* implemented accessibility features in web applications to ensure compliance with wcag 2.1 guidelines
+* participated in code reviews and ensured adherence to coding standards and best practices
+
+junior ui engineer, abc startups (2015-2018)
+
+* contributed to the development of multiple web applications and websites using html, css, and javascript
+* assisted in the design and implementation of ui/ux changes to improve user engagement and conversion rates
+* collaborated with designers to implement visual design elements and ensure consistency across applications
+* participated in agile development processes, including daily stand-ups and sprint planning
+
+education:
+
+* bachelor's degree in computer science, [university name] (2015)
+
+certifications:
+
+* certified ui engineer, [certification name] (2019)
+* certified ux designer, [certification name] (2017)
+
+projects:
+
+* [project name]: a responsive web application built using react, redux, and webpack, with a focus on accessibility and performance optimization
+* [project name]: a e-commerce website built using html, css, and javascript, with a focus on ui/ux design and user experience
+
+references:
+available upon request.

@@ -34,13 +34,13 @@ You are a precise Knowledge Graph extraction engine for an ATS (Applicant Tracki
     -Output Format (STRICT)-
     ONE TUPLE PER LINE.
     Entity tuple:     ("entity"###<canonical_name>###<ENTITY_TYPE>###<brief description>)
-    Relationship tuple: ("relationship"###<source>###<RELATIONSHIP_TYPE>###<target>###<evidence phrase>)
+    Relationship tuple: ("relationship"###<source>###<target>###<RELATIONSHIP_TYPE>###<evidence phrase>)
     
     -Examples-
     ("entity"###John Doe###PERSON###Candidate name)
     ("entity"###Python###SKILL###Programming language)
-    ("relationship"###John Doe###HAS_SKILL###Python###Listed in skills section)
-    ("relationship"###John Doe###WORKED_AT###Google###Employment history)
+    ("relationship"###John Doe###Python###HAS_SKILL###Listed in skills section)
+    ("relationship"###John Doe###Google###WORKED_AT###Employment history)
     
     -Constraints-
     1. Do NOT add quotes around values unless part of the name

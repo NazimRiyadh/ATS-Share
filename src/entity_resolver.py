@@ -241,7 +241,7 @@ class EntityResolver:
         
         if entity_type_upper == "SKILL":
             return self.resolve_skill(entity)
-        elif entity_type_upper == "COMPANY":
+        elif entity_type_upper == "COMPANY" or entity_type_upper == "ORGANIZATION":
             return self.resolve_company(entity)
         else:
             # For other types, just clean the name

@@ -41,6 +41,10 @@ class Settings(BaseSettings):
     gemini_api_key: str = Field(default="", description="Google Gemini API Key")
     gemini_model: str = Field(default="gemini-flash-latest", description="Gemini model name")
     
+    # OpenAI Configuration
+    openai_api_key: str = Field(default="", description="OpenAI API Key")
+    openai_model: str = Field(default="gpt-4o-mini", description="OpenAI model name")
+    
     # Embedding Configuration
     embedding_model: str = Field(default="BAAI/bge-m3")
     embedding_dim: int = Field(default=1024)
