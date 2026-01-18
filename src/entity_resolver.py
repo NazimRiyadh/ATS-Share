@@ -28,6 +28,7 @@ class EntityType(str, Enum):
     LOCATION = "LOCATION"
     CERTIFICATION = "CERTIFICATION"
     EDUCATION = "EDUCATION"
+    EXPERIENCE = "EXPERIENCE"
 
 
 class RelationType(str, Enum):
@@ -38,6 +39,7 @@ class RelationType(str, Enum):
     LOCATED_IN = "LOCATED_IN"
     HAS_CERTIFICATION = "HAS_CERTIFICATION"
     HAS_EDUCATION = "HAS_EDUCATION"
+    HAS_EXPERIENCE = "HAS_EXPERIENCE"
     WORKED_WITH = "WORKED_WITH"  # Colleague/team relationships
 
 

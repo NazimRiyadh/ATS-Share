@@ -298,5 +298,17 @@
     "success": true,
     "last_ingested": "2026-01-18T18:49:16.422479",
     "candidate_name": "Ui Engineer Tammy Mckenzie Applying For The Role Of  22"
+  },
+  "UI_Engineer_Caroline_Burgess_78.txt": {
+    "hash": "20b383c802a6a1ab7a37e068ac1766167a8a5bb7905ca8ee69fcd6dfcbb8a52c",
+    "success": true,
+    "last_ingested": "2026-01-18T22:45:18.432680",
+    "candidate_name": "Ui Engineer Caroline Burgess 78"
+  },
+  "data_analyst_candidate_profile__veda_bhat_100.txt": {
+    "hash": "11fb1ed1c00c903cf02ecc059b8a1cc1eb72e7dcbb63ccba79bb8ab66895b9a3",
+    "success": true,
+    "last_ingested": "2026-01-18T22:49:54.063769",
+    "candidate_name": "Data Analyst Candidate Profile  Veda Bhat 100"
   }
 }

@@ -125,6 +125,18 @@ class RAGManager:
 Your goal is to extract structured information about entities and their relationships.
 The output format is STRICT. Follow the examples and constraints precisely.
 
+    -Entity Types-
+    PERSON       : Candidate full name
+    SKILL        : Technical or professional skill
+    ROLE         : Job title or role
+    COMPANY      : Organization/company name
+    CERTIFICATION: Formal certification or license
+    LOCATION     : City, state, or country
+    EXPERIENCE   : Years of experience (e.g., "5 years", "3+ years Python")
+
+    -Relationship Types-
+    HAS_SKILL, HAS_ROLE, WORKED_AT, HAS_CERTIFICATION, LOCATED_IN, HAS_EXPERIENCE
+
     -Output Format (STRICT)-
     ONE TUPLE PER LINE.
     Entity tuple:     ("entity"###<canonical_name>###<ENTITY_TYPE>###<brief description>)
@@ -133,8 +145,11 @@ The output format is STRICT. Follow the examples and constraints precisely.
     -Examples-
     ("entity"###John Doe###PERSON###Candidate name)
     ("entity"###Python###SKILL###Programming language)
+    ("entity"###5 years###EXPERIENCE###Total professional experience)
+    ("entity"###3 years Python###EXPERIENCE###Skill-specific experience)
     ("relationship"###John Doe###Python###HAS_SKILL###Listed in skills section)
     ("relationship"###John Doe###Google###WORKED_AT###Employment history)
+    ("relationship"###John Doe###5 years###HAS_EXPERIENCE###Summary section)
     
     -Constraints-
     1. Do NOT add quotes around values unless part of the name
@@ -146,12 +161,10 @@ The output format is STRICT. Follow the examples and constraints precisely.
     7. Do NOT split tuples across lines or chunks; ensure each tuple is complete
     8. Use only "###" as the delimiter.
     9. **CRITICAL**: Do NOT label relationships as "entity". 
-       WRONG: ("entity"###John Doe###HAS_SKILL###Python###...)
-       RIGHT: ("relationship"###John Doe###HAS_SKILL###Python###...)
     10. Output NOTHING if no valid entities or relationships exist in the text
     11. **CRITICAL**: Do NOT use "UNKNOWN", "OTHER", or generic types. If the type is uncertain, SKIP the entity.
     12. **CRITICAL**: Do NOT output "None" or empty fields.
-    13. **CRITICAL**: Relationship types (e.g., HAS_SKILL, WORKED_AT) are NOT entities. NEVER output ("entity"###HAS_SKILL...).
+    13. **CRITICAL**: Extract EXPERIENCE entities for any mentioned years of experience.
     
     -Text-
     {input_text}
