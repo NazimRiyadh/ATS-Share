@@ -234,13 +234,13 @@ flowchart LR
 
 ## Storage Architecture
 
-| Components         | Technology                                                 | Purpose                              |
-| ------------------ | ---------------------------------------------------------- | ------------------------------------ |
-| **Backbone LLM**   | Ollama `llama3.1:8b` (optimized for instruction following) | LLM for generation and extraction    |
-| **Vector Storage** | PostgreSQL + pgvector                                      | Resume chunk embeddings (HNSW index) |
-| **KV Storage**     | PostgreSQL                                                 | Full documents, text chunks, cache   |
-| **Graph Storage**  | Neo4j                                                      | Knowledge graph (entities/relations) |
-| **Doc Status**     | PostgreSQL                                                 | Ingestion tracking                   |
+| Components         | Technology                    | Purpose                              |
+| ------------------ | ----------------------------- | ------------------------------------ |
+| **Backbone LLM**   | Ollama / RunPod (llama3.1:8b) | LLM for generation and extraction    |
+| **Vector Storage** | PostgreSQL + pgvector         | Resume chunk embeddings (HNSW index) |
+| **KV Storage**     | PostgreSQL                    | Full documents, text chunks, cache   |
+| **Graph Storage**  | Neo4j                         | Knowledge graph (entities/relations) |
+| **Doc Status**     | PostgreSQL                    | Ingestion tracking                   |
 
 ---
 

@@ -23,21 +23,40 @@
     .\setup_env.bat
     ```
 
-3.  **Start Database Services**
+    _Optional: If you plan to use RunPod Serverless instead of local Ollama, you can skip the local model pull step in the script or ignore errors if you lack RAM._
+
+3.  **Configure Environment (.env)**
+    Copy `.env.example` to `.env`.
+
+    **For Local Ollama (Default):**
+
+    ```env
+    LLM_PROVIDER=ollama
+    ```
+
+    **For RunPod Serverless:**
+
+    ```env
+    LLM_PROVIDER=runpod
+    RUNPOD_API_KEY=your_key
+    RUNPOD_ENDPOINT_ID=your_id
+    ```
+
+4.  **Start Database Services**
     Ensure Docker is running, then start the containers:
 
     ```powershell
     docker-compose up -d
     ```
 
-4.  **Initialize the Database**
+5.  **Initialize the Database**
     Create the necessary tables and schema:
 
     ```powershell
-    .\venv312\Scripts\python scripts/init_db.py
+    python scripts/init_db.py
     ```
 
-5.  **Verify the System**
+6.  **Verify the System**
     Run the API to ensure everything is connected:
     ```powershell
     .\run_api.bat

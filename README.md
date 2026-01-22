@@ -8,9 +8,10 @@ A production-ready Applicant Tracking System powered by **LightRAG** with intell
 
 - **🧠 Dual-Level Retrieval**: Combines PostgreSQL/pgvector similarity search with Neo4j knowledge graph reasoning
 - **📊 Smart Ingestion**: SHA-256 hash-based state tracking automatically skips unchanged resumes (incremental ingestion)
+- **☁️ RunPod Serverless**: Optional offloading of LLM inference to RunPod GPU endpoints
 - **🔀 Adaptive LLM Routing**:
-  - `qwen2.5:3b` for fast entity extraction during ingestion
-  - `llama3.1:8b` for complex reasoning and chat responses
+  - `qwen2.5:3b` for fast entity extraction (Local or RunPod)
+  - `llama3.1:8b` for complex reasoning (Local or RunPod)
 - **🎯 5 Retrieval Modes**: naive, local, global, hybrid, mix - with intelligent fallback
 - **📄 Multi-Format Support**: Ingest PDF, DOCX, and TXT resumes
 - **💼 Job-Based Analysis**: AI-powered candidate shortlisting with relevance scoring
@@ -39,7 +40,7 @@ A production-ready Applicant Tracking System powered by **LightRAG** with intell
 graph TB
     subgraph "Data Ingestion"
         A[Resume Files] --> B[Resume Parser]
-        B --> C[LLM Extractor<br/>qwen2.5:3b]
+        B --> C[LLM Extractor]
         C --> D[Entity Resolver]
         D --> E[LightRAG Pipeline]
     end
@@ -57,14 +58,17 @@ graph TB
         J -->|global| M[Community Graph]
         J -->|hybrid| N[Local + Global]
         J -->|mix| O[Dual-Level]
+        J -->|mix| O[Dual-Level]
 
         K & L & M & N & O --> P[Reranker<br/>ms-marco-MiniLM]
     end
 
     subgraph "Response Generation"
         P --> Q[Context Builder]
-        Q --> R[LLM Chat<br/>llama3.1:8b]
-        R --> S[Structured Response]
+        Q --> R{LLM Provider}
+        R -->|Local| S[Ollama]
+        R -->|Cloud| T[RunPod / Gemini]
+        S & T --> U[Structured Response]
     end
 
     F & G -.data.-> K & L & M & N & O
@@ -72,17 +76,16 @@ graph TB
 
 ## 🛠️ Tech Stack
 
-| Component            | Technology                           | Purpose                               |
-| -------------------- | ------------------------------------ | ------------------------------------- |
-| **Backend**          | FastAPI (Python 3.10+)               | REST API server                       |
-| **RAG Framework**    | LightRAG                             | Document processing & retrieval       |
-| **Vector Store**     | PostgreSQL 16 + pgvector             | Embedding storage & similarity search |
-| **Graph Database**   | Neo4j Community                      | Knowledge graph & relationships       |
-| **LLM (Extraction)** | Ollama + qwen2.5:3b                  | Fast entity extraction                |
-| **LLM (Chat)**       | Ollama + llama3.1:8b                 | Reasoning & response generation       |
-| **Embeddings**       | BAAI/bge-m3 (1024-dim)               | Semantic text representation          |
-| **Reranking**        | cross-encoder/ms-marco-MiniLM-L-6-v2 | Result refinement                     |
-| **Parsing**          | PyPDF2, python-docx                  | Resume text extraction                |
+| Component          | Technology                           | Purpose                               |
+| ------------------ | ------------------------------------ | ------------------------------------- |
+| **Backend**        | FastAPI (Python 3.10+)               | REST API server                       |
+| **RAG Framework**  | LightRAG                             | Document processing & retrieval       |
+| **Vector Store**   | PostgreSQL 16 + pgvector             | Embedding storage & similarity search |
+| **Graph Database** | Neo4j Community                      | Knowledge graph & relationships       |
+| **LLM Inference**  | Ollama / RunPod Serverless           | Entity extraction & Reasoning         |
+| **Embeddings**     | BAAI/bge-m3 (1024-dim)               | Semantic text representation          |
+| **Reranking**      | cross-encoder/ms-marco-MiniLM-L-6-v2 | Result refinement                     |
+| **Parsing**        | PyPDF2, python-docx                  | Resume text extraction                |
 
 ## 🚀 Quick Start
 
@@ -91,7 +94,7 @@ graph TB
 - **OS**: Windows 10/11 (currently configured for Windows)
 - **Python**: 3.10 or higher (for local development)
 - **Docker Desktop**: For containerized deployment or database services
-- **Ollama**: Required for local LLM inference ([Download](https://ollama.com/))
+- **Ollama**: Required for local LLM inference (Optional if using RunPod)
 - **GPU**: Optional but recommended (NVIDIA with CUDA support for faster embeddings)
 
 ### Deployment Options
@@ -161,7 +164,7 @@ All services run in separate containers:
 - **postgres**: PostgreSQL + pgvector for vector storage
 - **neo4j**: Knowledge graph database
 - **redis**: Caching layer
-- **Ollama**: Runs on host machine (not containerized)
+- **Ollama**: Runs on host machine (or external RunPod endpoint)
 
 For detailed documentation, troubleshooting, and advanced configuration, see **[DOCKER.md](DOCKER.md)**.
 
@@ -190,19 +193,22 @@ This script will:
 # Copy environment template
 copy .env.example .env
 
-# Edit .env with your settings (optional - defaults work for local development)
+# Edit .env with your settings (see below)
 ```
 
 Key configuration options:
 
 ```env
+# LLM Provider Selection
+LLM_PROVIDER=ollama            # Options: ollama, runpod, gemini
+
 # LLM Models
 LLM_MODEL=llama3.1:8b          # Chat/reasoning model
 LLM_EXTRACTION_MODEL=qwen2.5:3b # Fast extraction model
 
-# Embedding
-EMBEDDING_MODEL=BAAI/bge-m3
-EMBEDDING_DIM=1024
+# RunPod Configuration (Optional)
+RUNPOD_API_KEY=your_key...
+RUNPOD_ENDPOINT_ID=your_id...
 
 # Database (default localhost)
 POSTGRES_URI=postgresql+asyncpg://postgres:ats_secure_password@localhost:5432/ats_db

@@ -32,7 +32,7 @@ Your team needs:
    python --version  # Must show 3.12.x
    ```
 2. **Docker Desktop**
-3. **Ollama** with models:
+3. **Ollama** with models (Optional if using RunPod):
    ```bash
    ollama pull llama3.1:8b
    ollama pull qwen2.5:3b

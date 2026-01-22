@@ -235,7 +235,8 @@ def parse_reranked_to_candidates(
             break
         
         content = item.get("content", "")
-        score = item.get("relevance_score", 0.5)
+        # Handle both 'score' (hybrid) and 'relevance_score' (reranker)
+        score = item.get("relevance_score", item.get("score", 0.5))
         
         # Extract candidate name from content
         name = extract_candidate_name(content)

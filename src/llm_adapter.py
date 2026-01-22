@@ -8,6 +8,7 @@ import logging
 from typing import Optional, Union, List, Dict, Any
 
 import httpx
+import time
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from .config import settings
@@ -411,6 +412,7 @@ def clean_extraction_output(text: str) -> str:
 _ollama_adapter: Optional[OllamaAdapter] = None
 _gemini_adapter: Optional[GeminiAdapter] = None
 _openai_adapter: Optional['OpenAIAdapter'] = None
+_runpod_adapter: Optional['RunPodAdapter'] = None
 
 
 class OpenAIAdapter:
@@ -478,6 +480,159 @@ class OpenAIAdapter:
                 raise
 
 
+
+class RunPodAdapter:
+    """Async adapter for RunPod Serverless Ollama."""
+    
+    def __init__(self):
+        self.api_key = settings.runpod_api_key
+        self.endpoint_id = settings.runpod_endpoint_id
+        self.model = settings.llm_model
+        
+        if not self.api_key or not self.endpoint_id:
+            logger.warning("RunPod credentials (API Key or Endpoint ID) are missing.")
+            
+        self.base_url = f"https://api.runpod.ai/v2/{self.endpoint_id}"
+        
+    async def generate(self, prompt: str, system_prompt: Optional[str] = None, **kwargs) -> str:
+        """Generate text using RunPod Serverless."""
+        if not self.api_key or not self.endpoint_id:
+            raise ValueError("RunPod configuration missing (runpod_api_key, runpod_endpoint_id)")
+            
+        # 1. Prepare Messages
+        messages = []
+        if system_prompt:
+             messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
+        # 2. Determine Model Routing
+        current_model = self.model
+        is_entity_extraction = any(kw in prompt.lower() for kw in ["entity", "extract", "tuple", "relationship"])
+        
+        options = {}
+        if is_entity_extraction:
+            current_model = settings.llm_extraction_model
+            logger.info(f"🔄 [RunPod] Routing to Extraction Model: {current_model}")
+            
+            # Force Persona if missing
+            if not system_prompt:
+                # Add to messages directly if system_prompt arg was None
+                messages.insert(0, {
+                    "role": "system", 
+                    "content": (
+                        "You are a precise ATS knowledge graph extraction engine. "
+                        "Extract entities and relationships EXACTLY as specified in the schema. "
+                        "Output ONLY valid tuples with | delimiter. "
+                        "Do NOT add markdown, explanations, or inferred information."
+                    )
+                })
+            
+            # Strict Options
+            options = {
+                "temperature": 0.0,
+                "num_predict": 2048,
+                "top_p": 0.5,
+                "stop": ["\n\n\n", "User:", "Observation:", "Text:"]
+            }
+        else:
+            logger.info(f"💬 [RunPod] Routing to Chat Model: {current_model}")
+            options = {
+                "temperature": 0.1,
+                "num_predict": 4096,
+                "top_p": 0.9,
+                "stop": ["\n\n\n\n", "<|end|>", "</s>"]
+            }
+
+        # 3. Construct RunPod Payload
+        runpod_input = {
+            "input": {
+                "model": current_model,
+                "messages": messages,
+                "options": options
+            }
+        }
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        async with httpx.AsyncClient(timeout=settings.llm_timeout + 30) as client:
+            try:
+                # A. Submit Job (Async Run)
+                submit_resp = await client.post(f"{self.base_url}/run", headers=headers, json=runpod_input)
+                submit_resp.raise_for_status()
+                job_data = submit_resp.json()
+                job_id = job_data["id"]
+                
+                # B. Poll for Completion
+                start_time = time.time()
+                while True:
+                    if time.time() - start_time > settings.llm_timeout:
+                         raise TimeoutError("RunPod job timed out")
+                    
+                    status_resp = await client.get(f"{self.base_url}/status/{job_id}", headers=headers)
+                    status_resp.raise_for_status()
+                    status_data = status_resp.json()
+                    
+                    status = status_data.get("status")
+                    if status == "COMPLETED":
+                        output = status_data.get("output", {})
+                        
+                        # DEBUG: Print output structure
+                        logger.info(f"🔍 RunPod Raw Output Type: {type(output)}")
+                        logger.info(f"🔍 RunPod Raw Output: {str(output)[:500]}") # Truncate for sanity
+
+                        # Handle potential errors
+                        if isinstance(output, dict) and "error" in output:
+                             raise RuntimeError(f"RunPod/Ollama Error: {output['error']}")
+                        
+                        # Handle different output structures
+                        content = ""
+                        try:
+                            if isinstance(output, dict):
+                                # Standard expectation: single response object
+                                content = output.get("message", {}).get("content", "")
+                                if not content and "choices" in output:
+                                     # OpenAI single object format
+                                     content = output["choices"][0]["message"]["content"]
+                            elif isinstance(output, list) and len(output) > 0:
+                                first_item = output[0]
+                                if isinstance(first_item, dict):
+                                    # Check for Ollama-style 'message'
+                                    if "message" in first_item:
+                                        content = first_item.get("message", {}).get("content", "")
+                                    # Check for OpenAI-style 'choices'
+                                    elif "choices" in first_item:
+                                        content = first_item["choices"][0]["message"]["content"]
+                        except Exception as e:
+                            logger.error(f"Error parsing RunPod output: {e}")
+                        
+                        if not content:
+                             logger.warning(f"Could not parse content from RunPod output: {output}")
+
+                        # Apply standard post-processing
+                        if "llama3.1" in current_model:
+                             if "```" in content:
+                                 content = content.replace("```text", "").replace("```", "").strip()
+                             import re
+                             content = re.sub(r'\("entity"\|\s*"?\s*\(entity"?\s*\|', '("entity"|"', content)
+                             content = re.sub(r'\("relationship"\|\s*"?\s*\(relationship"?\s*\|', '("relationship"|"', content)
+                             content = content.replace("(entity|", "").replace("(relationship|", "").replace("</s>", "")
+                             content = re.sub(r'^\("entity"\|\s*"?\(entity"?', '("entity"|', content, flags=re.MULTILINE)
+                        
+                        return content
+                        
+                    elif status == "FAILED":
+                        raise RuntimeError(f"RunPod job failed: {status_data}")
+                    
+                    await asyncio.sleep(1) # Pool interval
+
+            except Exception as e:
+                logger.error(f"RunPod API error: {e}")
+                raise
+
+
 def get_ollama_adapter() -> OllamaAdapter:
     """Get or create global Ollama adapter."""
     global _ollama_adapter
@@ -498,6 +653,12 @@ def get_openai_adapter() -> OpenAIAdapter:
         _openai_adapter = OpenAIAdapter()
     return _openai_adapter
 
+def get_runpod_adapter() -> RunPodAdapter:
+    global _runpod_adapter
+    if _runpod_adapter is None:
+        _runpod_adapter = RunPodAdapter()
+    return _runpod_adapter
+
 
 async def ollama_llm_func(
     prompt: str,
@@ -516,10 +677,14 @@ async def ollama_llm_func(
     elif provider == "openai":
         adapter = get_openai_adapter()
         return await adapter.generate(prompt, system_prompt, **kwargs)
+    elif provider == "runpod":
+        adapter = get_runpod_adapter()
+        return await adapter.generate(prompt, system_prompt, **kwargs)
     else:
         # Default to Ollama
         adapter = get_ollama_adapter()
         return await adapter.generate(prompt, system_prompt, **kwargs)
+
 
 
 # For synchronous contexts

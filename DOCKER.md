@@ -7,10 +7,32 @@ Complete guide for running LightRAG ATS in Docker containers.
 ### 1. Prerequisites
 
 - Docker Desktop installed and running
-- Ollama installed on host machine with models pulled
 - At least 8GB RAM allocated to Docker
+- **LLM Provider**:
+  - **Local**: Ollama installed on host machine with models pulled
+  - **Cloud**: RunPod API Key and Endpoint ID
 
-### 2. Verify Ollama Setup
+### 2. Configure Environment
+
+1. Copy `.env.example` to `.env.docker`.
+2. Configure your provider:
+
+**For RunPod (Recommended for Cloud/Speed):**
+
+```env
+LLM_PROVIDER=runpod
+RUNPOD_API_KEY=your_key
+RUNPOD_ENDPOINT_ID=your_id
+```
+
+**For Local Ollama:**
+
+```env
+LLM_PROVIDER=ollama
+OLLAMA_BASE_URL=http://host.docker.internal:11434
+```
+
+### 3. Verify Ollama Setup (If using Local)
 
 ```powershell
 # Check Ollama is running
@@ -21,7 +43,7 @@ ollama pull llama3.1:8b
 ollama pull qwen2.5:3b
 ```
 
-### 3. Start All Services
+### 4. Start All Services
 
 ```powershell
 # Build and start all containers
@@ -31,7 +53,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-### 4. Initialize Database
+### 5. Initialize Database
 
 ```powershell
 # Wait for services to be healthy (check with: docker-compose ps)
@@ -39,7 +61,7 @@ docker-compose logs -f
 docker-compose exec app python scripts/init_db.py
 ```
 
-### 5. Ingest Resumes
+### 6. Ingest Resumes
 
 ```powershell
 # Place resume files in data/resumes/ directory
@@ -47,7 +69,7 @@ docker-compose exec app python scripts/init_db.py
 docker-compose exec app python scripts/ingest_resumes.py --dir /app/data/resumes --batch-size 5
 ```
 
-### 6. Access the API
+### 7. Access the API
 
 - **API**: http://localhost:8000
 - **API Docs**: http://localhost:8000/docs

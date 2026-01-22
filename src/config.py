@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     
     # PostgreSQL Configuration
     postgres_uri: str = Field(
-        default="postgresql+asyncpg://postgres:ats_secure_password@localhost:5432/ats_db",
+        default="postgresql+asyncpg://postgres:admin@localhost:5432/ats_db",
         description="PostgreSQL connection URI"
     )
     postgres_host: str = Field(default="localhost")
@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     
     # Ollama / LLM Configuration
     ollama_base_url: str = Field(default="http://localhost:11434")
+    
     llm_model: str = Field(default="llama3.1:8b")
     llm_extraction_model: str = Field(default="llama3.1:8b", description="Model for entity extraction (stronger for relationships)")
     llm_max_tokens: int = Field(default=4096)
@@ -37,9 +38,13 @@ class Settings(BaseSettings):
     llm_timeout: float = Field(default=300.0, description="LLM request timeout in seconds (default: 5 minutes)")
     
     # Provider Selection
-    llm_provider: str = Field(default="ollama", description="LLM provider: 'ollama' or 'gemini'")
+    llm_provider: str = Field(default="ollama", description="LLM provider: 'ollama', 'gemini', or 'runpod'")
     gemini_api_key: str = Field(default="", description="Google Gemini API Key")
     gemini_model: str = Field(default="gemini-flash-latest", description="Gemini model name")
+
+    # RunPod Configuration
+    runpod_api_key: str = Field(default="", description="RunPod API Key")
+    runpod_endpoint_id: str = Field(default="", description="RunPod Serverless Endpoint ID")
     
     # OpenAI Configuration
     openai_api_key: str = Field(default="", description="OpenAI API Key")
