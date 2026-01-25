@@ -670,6 +670,7 @@ async def ollama_llm_func(
     LightRAG-compatible LLM function (Universal Dispatcher).
     """
     provider = settings.llm_provider.lower()
+    logger.info(f"🔀 LLM Provider Selected: {provider.upper()}")
     
     if provider == "gemini":
         adapter = get_gemini_adapter()

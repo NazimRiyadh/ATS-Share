@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.config import settings
 from src.logging_config import configure_logging, get_logger
 from src.rag_config import get_rag_manager
-from src.llm_adapter import get_ollama_adapter
+from src.llm_adapter import get_ollama_adapter, get_runpod_adapter
 from api.middleware import setup_middleware, setup_exception_handlers
 from api.routes import ingest, analyze, chat, config
 from api.models import HealthResponse, StatsResponse
@@ -55,8 +55,10 @@ async def lifespan(app: FastAPI):
         rag_manager = get_rag_manager()
         await rag_manager.close()
         
-        ollama = get_ollama_adapter()
-        await ollama.close()
+        # Only close Ollama adapter if using Ollama provider
+        if settings.llm_provider.lower() == "ollama":
+            ollama = get_ollama_adapter()
+            await ollama.close()
         
         logger.info("✅ Cleanup complete")
         
@@ -122,7 +124,7 @@ async def health_check():
     components = {
         "api": False,
         "rag": False,
-        "ollama": False,
+        "llm": False,  # Renamed from 'ollama' to be provider-agnostic
         "postgres": False,
         "neo4j": False
     }
@@ -142,15 +144,29 @@ async def health_check():
     except:
         pass
     
-    # Check Ollama
+    # Check LLM Provider (provider-aware)
+    provider = settings.llm_provider.lower()
     try:
-        ollama = get_ollama_adapter()
-        components["ollama"] = await ollama.check_health()
-    except:
-        pass
+        if provider == "ollama":
+            ollama = get_ollama_adapter()
+            components["llm"] = await ollama.check_health()
+        elif provider == "runpod":
+            # RunPod doesn't have a simple health check, assume healthy if configured
+            adapter = get_runpod_adapter()
+            components["llm"] = bool(adapter.api_key and adapter.endpoint_id)
+            if components["llm"]:
+                logger.info(f"✅ RunPod configured: endpoint={adapter.endpoint_id[:8]}...")
+        elif provider == "gemini":
+            components["llm"] = bool(settings.gemini_api_key)
+        elif provider == "openai":
+            components["llm"] = bool(settings.openai_api_key)
+        else:
+            components["llm"] = False
+    except Exception as e:
+        logger.warning(f"LLM health check failed: {e}")
     
     # Determine overall status
-    critical_components = ["api", "rag", "ollama", "postgres", "neo4j"]
+    critical_components = ["api", "rag", "llm", "postgres", "neo4j"]
     all_critical_healthy = all(components.get(c, False) for c in critical_components)
     
     status = "healthy" if all_critical_healthy else "degraded"

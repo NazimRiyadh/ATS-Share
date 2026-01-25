@@ -4,9 +4,14 @@ Uses Pydantic Settings for environment variable loading and validation.
 """
 
 import os
+from pathlib import Path
 from functools import lru_cache
 from pydantic_settings import BaseSettings
 from pydantic import Field
+
+# Get project root for .env path resolution
+_PROJECT_ROOT = Path(__file__).parent.parent
+_ENV_FILE_PATH = str(_PROJECT_ROOT / ".env")
 
 
 class Settings(BaseSettings):
@@ -72,15 +77,25 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO")
     
     class Config:
-        env_file = ".env"
+        # Use absolute path to ensure .env is found from any working directory
+        env_file = _ENV_FILE_PATH
         env_file_encoding = "utf-8"
         case_sensitive = False
 
 
-@lru_cache()
+_settings_instance: Settings = None
+
 def get_settings() -> Settings:
-    """Get cached settings instance."""
-    return Settings()
+    """Get settings instance. Reloads from .env on first call or after clear."""
+    global _settings_instance
+    if _settings_instance is None:
+        _settings_instance = Settings()
+    return _settings_instance
+
+def clear_settings_cache():
+    """Clear cached settings to force reload from .env."""
+    global _settings_instance
+    _settings_instance = None
 
 
 # Convenience export
